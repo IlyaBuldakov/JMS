@@ -1,6 +1,6 @@
 package model.service;
 
-import model.MetricProducer;
+import model.broker.MetricProducer;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
 import model.hardware.impl.CpuHardwareAnalyserImpl;

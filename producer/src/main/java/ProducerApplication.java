@@ -1,4 +1,4 @@
-import model.MetricProducer;
+import model.broker.MetricProducer;
 import model.service.MessageService;
 
 public class ProducerApplication {

@@ -1,4 +1,4 @@
-package model;
+package model.broker;
 
 import model.hardware.Metrics;
 import org.slf4j.Logger;
