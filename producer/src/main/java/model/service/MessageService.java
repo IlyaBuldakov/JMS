@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class MessageService {
 
@@ -32,20 +31,11 @@ public class MessageService {
 
     public void proceed() {
         while (true) {
-            delay(1000);
             Set<Map<Metrics, Object>> analysedInfo = new HashSet<>();
             for (HardwareAnalyser analyser : hardwareAnalysers) {
                 analysedInfo.add(analyser.analyse());
             }
             metricProducer.send(analysedInfo);
-        }
-    }
-
-    private void delay(long millis) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(millis);
-        } catch (InterruptedException e) {
-            LOG.warn("Interrupted while sleeping.");
         }
     }
 }
