@@ -1,8 +1,7 @@
 package model.service;
 
 import model.broker.MessageReceiver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import view.ApplicationView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,16 +9,17 @@ public class MessageService {
 
     private final MessageReceiver messageReceiver;
 
-    private static final Logger LOG = LoggerFactory.getLogger(MessageService.class);
+    private final ApplicationView applicationView;
 
-    public MessageService(MessageReceiver messageReceiver) {
+    public MessageService(MessageReceiver messageReceiver, ApplicationView applicationView) {
         this.messageReceiver = messageReceiver;
+        this.applicationView = applicationView;
     }
 
     public void proceed() {
         while (true) {
             delay(1000);
-            messageReceiver.receive();
+            this.messageReceiver.receive();
         }
     }
 
@@ -27,7 +27,7 @@ public class MessageService {
         try {
             TimeUnit.MILLISECONDS.sleep(millis);
         } catch (InterruptedException e) {
-            LOG.warn("Interrupted while sleeping.");
+            this.applicationView.handleException(e);
         }
     }
 }

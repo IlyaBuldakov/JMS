@@ -1,8 +1,7 @@
 package model.broker;
 
 import org.apache.activemq.command.ActiveMQBytesMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import view.ApplicationView;
 
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
@@ -12,14 +11,19 @@ import java.io.ObjectInputStream;
 
 public class MessageReceiver {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MessageReceiver.class);
+    private final ApplicationView applicationView;
 
-    private final BrokerEnvironmentHolder brokerEnv = new BrokerEnvironmentHolder();
+    private final BrokerEnvironmentHolder brokerEnv;
+
+    public MessageReceiver(ApplicationView applicationView, BrokerEnvironmentHolder brokerEnv) {
+        this.applicationView = applicationView;
+        this.brokerEnv = brokerEnv;
+    }
 
     public void receive() {
         try {
-            Session activeSession = brokerEnv.getSession();
-            Topic topic = brokerEnv.getTopic();
+            Session activeSession = this.brokerEnv.getSession();
+            Topic topic = this.brokerEnv.getTopic();
 
             MessageConsumer consumer = activeSession.createConsumer(topic);
             ActiveMQBytesMessage bytesMessage = (ActiveMQBytesMessage) consumer.receive();
@@ -30,12 +34,14 @@ public class MessageReceiver {
             ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
             ObjectInputStream ois = new ObjectInputStream(bis);
 
-            LOG.info("Message received " + ois.readObject());
+            BrokerMessage brokerMessage = (BrokerMessage) ois.readObject();
+
+            this.applicationView.handleMessage(brokerMessage);
 
             bis.close();
             ois.close();
         } catch (Exception exception) {
-            System.out.println(exception);
+            this.applicationView.handleException(exception);
         }
     }
 }

@@ -2,8 +2,7 @@ package model.broker;
 
 import model.YamlParser;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import view.ApplicationView;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -11,8 +10,6 @@ import javax.jms.Session;
 import javax.jms.Topic;
 
 public class BrokerEnvironmentHolder {
-
-    private static final Logger LOG = LoggerFactory.getLogger(BrokerEnvironmentHolder.class);
 
     private static final String TOPIC_NAME = "alerts";
 
@@ -22,17 +19,23 @@ public class BrokerEnvironmentHolder {
 
     private static Topic topic;
 
+    private final ApplicationView applicationView;
+
     private boolean isEnvironmentInitialized;
 
+    public BrokerEnvironmentHolder(ApplicationView applicationView) {
+        this.applicationView = applicationView;
+    }
+
     public Topic getTopic() {
-        if (!isEnvironmentInitialized) {
+        if (!this.isEnvironmentInitialized) {
             initEnvironment();
         }
         return topic;
     }
 
     public Session getSession() {
-        if (!isEnvironmentInitialized) {
+        if (!this.isEnvironmentInitialized) {
             initEnvironment();
         }
         return session;
@@ -48,9 +51,10 @@ public class BrokerEnvironmentHolder {
             connection.start();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             topic = session.createTopic(TOPIC_NAME);
-            isEnvironmentInitialized = true;
+            this.isEnvironmentInitialized = true;
+            this.applicationView.handleInfoLog("CONSUMER | Broker environment initialized");
         } catch (Exception exception) {
-            LOG.error(exception.getMessage());
+            this.applicationView.handleException(exception);
         }
     }
 }
