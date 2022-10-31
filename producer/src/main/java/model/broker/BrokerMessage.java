@@ -33,4 +33,13 @@ public class BrokerMessage implements Serializable {
     public Set<Map<Metrics, Object>> getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "BrokerMessage{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
+                ", value=" + value +
+                '}';
+    }
 }
