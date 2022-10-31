@@ -25,6 +25,6 @@ public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
                 .map(value -> value * CPU_LOAD_MAX_VALUE_PERCENT).toArray();
         return Map.of(
                 Metrics.CPU_PERCENT_LOAD,
-                cpuLoads[0]);
+                cpuLoads);
     }
 }
