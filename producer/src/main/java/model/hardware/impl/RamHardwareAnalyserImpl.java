@@ -2,14 +2,14 @@ package model.hardware.impl;
 
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
-import model.hardware.SystemInfoHolder;
+import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 
 import java.util.Map;
 
 public class RamHardwareAnalyserImpl implements HardwareAnalyser {
 
-    private static final GlobalMemory GLOBAL_MEMORY = SystemInfoHolder.SYSTEM_INFO
+    private static final GlobalMemory GLOBAL_MEMORY = new SystemInfo()
             .getHardware().getMemory();
 
     private static final int BYTES_IN_GB = 1_073_741_824;

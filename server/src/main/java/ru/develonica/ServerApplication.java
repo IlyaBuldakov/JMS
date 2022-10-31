@@ -3,12 +3,15 @@ package ru.develonica;
 import org.apache.activemq.broker.BrokerFactory;
 import org.apache.activemq.broker.BrokerService;
 import ru.develonica.model.YamlParser;
+import ru.develonica.view.ApplicationView;
 
 import java.net.URI;
 
 public class ServerApplication {
 
     private static final String BROKER_ADDRESS_YAML_KEY = "address";
+
+    private static final ApplicationView APPLICATION_VIEW = new ApplicationView();
 
     public static void main(String[] args) {
         try {
@@ -22,7 +25,7 @@ public class ServerApplication {
                 lock.wait();
             }
         } catch (Exception exception) {
-
+            APPLICATION_VIEW.handleException(exception);
         }
     }
 }

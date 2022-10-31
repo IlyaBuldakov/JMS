@@ -6,8 +6,7 @@ import model.hardware.Metrics;
 import model.hardware.impl.CpuHardwareAnalyserImpl;
 import model.hardware.impl.DiskHardwareAnalyserImpl;
 import model.hardware.impl.RamHardwareAnalyserImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import view.ApplicationView;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MessageService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MessageService.class);
+    private final ApplicationView applicationView;
 
     private final HardwareAnalyser[] hardwareAnalysers = {
             new CpuHardwareAnalyserImpl(),
@@ -26,7 +25,8 @@ public class MessageService {
 
     private final MetricProducer metricProducer;
 
-    public MessageService(MetricProducer metricProducer) {
+    public MessageService(ApplicationView applicationView, MetricProducer metricProducer) {
+        this.applicationView = applicationView;
         this.metricProducer = metricProducer;
     }
 
@@ -38,6 +38,7 @@ public class MessageService {
                 analysedInfo.add(analyser.analyse());
             }
             metricProducer.send(analysedInfo);
+            this.applicationView.handleInfoLog("PRODUCER | Send analysed info");
         }
     }
 
@@ -45,7 +46,7 @@ public class MessageService {
         try {
             TimeUnit.MILLISECONDS.sleep(millis);
         } catch (InterruptedException e) {
-            LOG.warn("Interrupted while sleeping.");
+            this.applicationView.handleException(e);
         }
     }
 }

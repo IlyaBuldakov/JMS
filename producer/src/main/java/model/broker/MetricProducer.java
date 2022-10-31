@@ -1,8 +1,7 @@
 package model.broker;
 
 import model.hardware.Metrics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import view.ApplicationView;
 
 import javax.jms.*;
 import java.io.ByteArrayOutputStream;
@@ -15,9 +14,14 @@ import java.util.UUID;
 
 public class MetricProducer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MetricProducer.class);
+    private final ApplicationView applicationView;
 
-    private final BrokerEnvironmentHolder brokerEnv = new BrokerEnvironmentHolder();
+    private final BrokerEnvironmentHolder brokerEnv;
+
+    public MetricProducer(ApplicationView applicationView, BrokerEnvironmentHolder brokerEnv) {
+        this.applicationView = applicationView;
+        this.brokerEnv = brokerEnv;
+    }
 
     public void send(Set<Map<Metrics, Object>> metrics) {
         try {
@@ -27,8 +31,8 @@ public class MetricProducer {
                     metrics
             );
 
-            Session activeSession = brokerEnv.getSession();
-            Topic topic = brokerEnv.getTopic();
+            Session activeSession = this.brokerEnv.getSession();
+            Topic topic = this.brokerEnv.getTopic();
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(buffer);
@@ -39,12 +43,12 @@ public class MetricProducer {
             message.writeBytes(brokerMessageBytes);
             MessageProducer producer = activeSession.createProducer(topic);
             producer.send(message);
-            LOG.info("Message " + brokerMessage.getId() + " | " + brokerMessage.getValue() + " send.");
+            this.applicationView.handleInfoLog("Message %s | %s send.".formatted(brokerMessage.id(), brokerMessage.value()));
 
             buffer.close();
             oos.close();
         } catch (JMSException | IOException exception) {
-            System.out.println(exception);
+            this.applicationView.handleException(exception);
         }
     }
 }

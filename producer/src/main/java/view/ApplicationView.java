@@ -1,16 +1,11 @@
 package view;
 
-import model.broker.BrokerMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationView {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationView.class);
-
-    public void handleMessage(BrokerMessage brokerMessage) {
-        System.out.println(brokerMessage);
-    }
 
     public void handleException(Exception exception) {
         String text = "Exception: %s. %s".formatted(exception.toString(), exception.getMessage());
