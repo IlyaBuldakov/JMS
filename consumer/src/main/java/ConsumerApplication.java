@@ -3,8 +3,9 @@ import model.service.MessageService;
 
 public class ConsumerApplication {
 
+    private static final MessageReceiver messageReceiver = new MessageReceiver();
+
     public static void main(String[] args) {
-        MessageReceiver messageReceiver = new MessageReceiver();
         MessageService messageService = new MessageService(messageReceiver);
         messageService.proceed();
     }
