@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class DiskHardwareAnalyserImpl implements HardwareAnalyser {
 
-    private static final FileSystem FILE_SYSTEM = new SystemInfo()
+    private static final FileSystem FILE_SYSTEM = SystemInfoHolder.SYSTEM_INFO
             .getOperatingSystem().getFileSystem();
 
     @Override

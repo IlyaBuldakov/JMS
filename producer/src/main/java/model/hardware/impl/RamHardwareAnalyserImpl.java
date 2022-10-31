@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class RamHardwareAnalyserImpl implements HardwareAnalyser {
 
-    private static final GlobalMemory GLOBAL_MEMORY = new SystemInfo()
+    private static final GlobalMemory GLOBAL_MEMORY = SystemInfoHolder.SYSTEM_INFO
             .getHardware().getMemory();
 
     @Override
