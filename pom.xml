@@ -11,6 +11,7 @@
     <modules>
         <module>server</module>
         <module>producer</module>
+        <module>consumer</module>
     </modules>
 
     <properties>
