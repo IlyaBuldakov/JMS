@@ -9,7 +9,7 @@ import model.hardware.impl.RamHardwareAnalyserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,7 +31,7 @@ public class MessageService {
 
     public void proceed() {
         while (true) {
-            Set<Map<Metrics, Object>> analysedInfo = new HashSet<>();
+            Set<Map<Metrics, Object>> analysedInfo = new LinkedHashSet<>();
             for (HardwareAnalyser analyser : hardwareAnalysers) {
                 analysedInfo.add(analyser.analyse());
             }
