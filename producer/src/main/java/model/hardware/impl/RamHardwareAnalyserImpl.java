@@ -2,6 +2,7 @@ package model.hardware.impl;
 
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
+import model.hardware.SystemInfoHolder;
 import oshi.SystemInfo;
 import oshi.hardware.GlobalMemory;
 

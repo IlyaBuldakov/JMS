@@ -26,7 +26,7 @@ public class ServerApplication {
                 lock.wait();
             }
         } catch (Exception exception) {
-            LOG.error(exception.toString());
+            LOG.error(exception.getMessage());
         }
     }
 }

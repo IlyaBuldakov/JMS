@@ -2,12 +2,13 @@ package model.broker;
 
 import model.hardware.Metrics;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class BrokerMessage {
+public class BrokerMessage implements Serializable {
 
     private final UUID id;
 
@@ -19,5 +20,17 @@ public class BrokerMessage {
         this.id = id;
         this.dateTime = dateTime;
         this.value = value;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public ZonedDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public Set<Map<Metrics, Object>> getValue() {
+        return value;
     }
 }

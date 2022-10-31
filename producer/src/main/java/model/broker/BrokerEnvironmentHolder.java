@@ -43,7 +43,7 @@ public class BrokerEnvironmentHolder {
         ConnectionFactory connectionFactory;
         try {
             String address = yamlParser.getValueFromProperties(String.class, BROKER_ADDRESS_YAML_KEY);
-            connectionFactory = new ActiveMQConnectionFactory(address);
+            connectionFactory = new ActiveMQConnectionFactory("tcp://" + address);
             Connection connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             topic = session.createTopic(TOPIC_NAME);

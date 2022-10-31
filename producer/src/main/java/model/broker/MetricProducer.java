@@ -39,11 +39,12 @@ public class MetricProducer {
             message.writeBytes(brokerMessageBytes);
             MessageProducer producer = activeSession.createProducer(topic);
             producer.send(message);
+            LOG.info("Message " + brokerMessage.getId() + " | " + brokerMessage.getValue() + " send.");
 
             buffer.close();
             oos.close();
         } catch (JMSException | IOException exception) {
-            LOG.error(exception.getMessage());
+            System.out.println(exception);
         }
     }
 }

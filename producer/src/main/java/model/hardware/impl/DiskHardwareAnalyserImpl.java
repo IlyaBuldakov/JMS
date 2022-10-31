@@ -2,7 +2,7 @@ package model.hardware.impl;
 
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
-import oshi.SystemInfo;
+import model.hardware.SystemInfoHolder;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 
