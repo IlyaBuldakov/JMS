@@ -6,7 +6,6 @@ import model.hardware.SystemInfoHolder;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +14,12 @@ public class DiskHardwareAnalyserImpl implements HardwareAnalyser {
     private static final FileSystem FILE_SYSTEM = SystemInfoHolder.SYSTEM_INFO
             .getOperatingSystem().getFileSystem();
 
+    private static final int BYTES_IN_GB = 1_073_741_824;
+
     @Override
     public Map<Metrics, Object> analyse() {
-        HashMap<Metrics, Object> resultMap = new HashMap<>();
-        List<OSFileStore> fileStores = FILE_SYSTEM.getFileStores();
-        for (OSFileStore fileStore : fileStores) {
-            resultMap.put(Metrics.DISK_MB_FREE_SPACE, fileStore.getFreeSpace());
-        }
-        return resultMap;
+        OSFileStore fileStore = FILE_SYSTEM.getFileStores().get(0);
+        return Map.of(Metrics.DISK_MB_FREE_SPACE,
+                fileStore.getFreeSpace() / BYTES_IN_GB);
     }
 }
