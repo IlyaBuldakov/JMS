@@ -21,10 +21,14 @@ public class BrokerEnvironmentHolder {
 
     private final ApplicationView applicationView;
 
+
+    private final YamlParser yamlParser;
+
     private boolean isEnvironmentInitialized;
 
-    public BrokerEnvironmentHolder(ApplicationView applicationView) {
+    public BrokerEnvironmentHolder(ApplicationView applicationView, YamlParser yamlParser) {
         this.applicationView = applicationView;
+        this.yamlParser = yamlParser;
     }
 
     public Topic getTopic() {
@@ -42,7 +46,6 @@ public class BrokerEnvironmentHolder {
     }
 
     private void initEnvironment() {
-        YamlParser yamlParser = new YamlParser();
         ConnectionFactory connectionFactory;
         try {
             String address = yamlParser.getValueFromProperties(String.class, BROKER_ADDRESS_YAML_KEY);
