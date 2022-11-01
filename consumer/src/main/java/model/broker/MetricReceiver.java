@@ -9,13 +9,13 @@ import javax.jms.Topic;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 
-public class MessageReceiver {
+public class MetricReceiver {
 
     private final ApplicationView applicationView;
 
     private final BrokerEnvironmentHolder brokerEnv;
 
-    public MessageReceiver(ApplicationView applicationView, BrokerEnvironmentHolder brokerEnv) {
+    public MetricReceiver(ApplicationView applicationView, BrokerEnvironmentHolder brokerEnv) {
         this.applicationView = applicationView;
         this.brokerEnv = brokerEnv;
     }
