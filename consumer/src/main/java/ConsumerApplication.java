@@ -1,6 +1,6 @@
+import controller.MessageController;
 import model.broker.BrokerEnvironmentHolder;
 import model.broker.MetricReceiver;
-import model.service.MessageService;
 import view.ApplicationView;
 
 public class ConsumerApplication {
@@ -12,7 +12,7 @@ public class ConsumerApplication {
     private static final MetricReceiver METRIC_RECEIVER = new MetricReceiver(APPLICATION_VIEW, BROKER_ENV);
 
     public static void main(String[] args) {
-        MessageService messageService = new MessageService(METRIC_RECEIVER, APPLICATION_VIEW);
+        MessageController messageService = new MessageController(METRIC_RECEIVER, APPLICATION_VIEW);
         messageService.proceed();
     }
 }

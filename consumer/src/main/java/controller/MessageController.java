@@ -1,17 +1,17 @@
-package model.service;
+package controller;
 
 import model.broker.MetricReceiver;
 import view.ApplicationView;
 
 import java.util.concurrent.TimeUnit;
 
-public class MessageService {
+public class MessageController {
 
     private final MetricReceiver metricReceiver;
 
     private final ApplicationView applicationView;
 
-    public MessageService(MetricReceiver metricReceiver, ApplicationView applicationView) {
+    public MessageController(MetricReceiver metricReceiver, ApplicationView applicationView) {
         this.metricReceiver = metricReceiver;
         this.applicationView = applicationView;
     }
@@ -29,5 +29,4 @@ public class MessageService {
         } catch (InterruptedException e) {
             this.applicationView.handleException(e);
         }
-    }
-}
+    }}
