@@ -16,7 +16,7 @@ public class RamHardwareAnalyserImpl implements HardwareAnalyser {
 
     @Override
     public Map<Metrics, Object> analyse() {
-        return Map.of(Metrics.RAM_MB_LOAD,
+        return Map.of(Metrics.RAM_GB_LOAD,
                 (GLOBAL_MEMORY.getTotal() - GLOBAL_MEMORY.getAvailable()) / BYTES_IN_GB);
     }
 }

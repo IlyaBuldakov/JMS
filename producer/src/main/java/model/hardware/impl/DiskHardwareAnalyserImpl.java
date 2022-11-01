@@ -18,7 +18,7 @@ public class DiskHardwareAnalyserImpl implements HardwareAnalyser {
     @Override
     public Map<Metrics, Object> analyse() {
         OSFileStore fileStore = FILE_SYSTEM.getFileStores().get(0);
-        return Map.of(Metrics.DISK_MB_FREE_SPACE,
+        return Map.of(Metrics.DISK_GB_FREE_SPACE,
                 fileStore.getFreeSpace() / BYTES_IN_GB);
     }
 }
