@@ -8,9 +8,9 @@ import model.hardware.impl.DiskHardwareAnalyserImpl;
 import model.hardware.impl.RamHardwareAnalyserImpl;
 import view.ApplicationView;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class MessageService {
@@ -33,7 +33,7 @@ public class MessageService {
     public void proceed() {
         while (true) {
             delay(1000);
-            Set<Map<Metrics, Object>> analysedInfo = new LinkedHashSet<>();
+            List<Map<Metrics, Object>> analysedInfo = new ArrayList<>();
             for (HardwareAnalyser analyser : hardwareAnalysers) {
                 analysedInfo.add(analyser.analyse());
             }

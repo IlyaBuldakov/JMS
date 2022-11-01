@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class MetricProducer {
         this.brokerEnv = brokerEnv;
     }
 
-    public void send(Set<Map<Metrics, Object>> metrics) {
+    public void send(List<Map<Metrics, Object>> metrics) {
         try {
             BrokerMessage brokerMessage = new BrokerMessage(
                     UUID.randomUUID(),
