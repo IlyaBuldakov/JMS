@@ -1,2 +1,12 @@
 # Broker address
 address: # Enter your address
+
+# CPU upper bound (percents load)
+cpu-bound: 10
+
+# RAM upper bound (gigabytes used)
+ram-bound: 10
+
+# Disk space bound (gigabytes of free space)
+disk-bound: 10
+
