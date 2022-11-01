@@ -9,7 +9,7 @@ public class ConsumerApplication {
 
     private static final BrokerEnvironmentHolder BROKER_ENV = new BrokerEnvironmentHolder(APPLICATION_VIEW);
 
-    private static final MetricReceiver METRIC_RECEIVER = new MetricReceiver(APPLICATION_VIEW, BROKER_ENV);
+    private static final MetricReceiver METRIC_RECEIVER = new MetricReceiver(BROKER_ENV);
 
     public static void main(String[] args) {
         MessageController messageService = new MessageController(METRIC_RECEIVER, APPLICATION_VIEW);

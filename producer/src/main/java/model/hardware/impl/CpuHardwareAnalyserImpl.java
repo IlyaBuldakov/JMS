@@ -17,11 +17,11 @@ public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
 
     @Override
     public Map<Metrics, Object> analyse() {
-        double[] cpuLoads = Arrays
+        double[] cpusLoad = Arrays
                 .stream(CPU.getProcessorCpuLoad(1000))
                 .map(value -> value * CPU_LOAD_MAX_VALUE_PERCENT).toArray();
         return Map.of(
                 Metrics.CPU_PERCENT_LOAD,
-                cpuLoads);
+                cpusLoad);
     }
 }

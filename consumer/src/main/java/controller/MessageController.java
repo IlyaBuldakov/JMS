@@ -1,5 +1,6 @@
 package controller;
 
+import model.broker.BrokerMessage;
 import model.broker.MetricReceiver;
 import view.ApplicationView;
 
@@ -18,8 +19,12 @@ public class MessageController {
 
     public void proceed() {
         while (true) {
-            delay(1000);
-            this.metricReceiver.receive();
+            try {
+                delay(1000);
+                BrokerMessage brokerMessage = this.metricReceiver.receive();
+            } catch (Exception exception) {
+                this.applicationView.handleException(exception);
+            }
         }
     }
 
