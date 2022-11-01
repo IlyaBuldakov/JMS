@@ -4,7 +4,7 @@ public enum Metrics {
 
     CPU_PERCENT_LOAD,
 
-    RAM_MB_LOAD,
+    RAM_GB_LOAD,
 
-    DISK_MB_FREE_SPACE
+    DISK_GB_FREE_SPACE
 }
