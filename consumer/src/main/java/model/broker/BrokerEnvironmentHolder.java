@@ -48,7 +48,7 @@ public class BrokerEnvironmentHolder {
     private void initEnvironment() {
         ConnectionFactory connectionFactory;
         try {
-            String address = yamlParser.getValueFromProperties(String.class, BROKER_ADDRESS_YAML_KEY);
+            String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
             connectionFactory = new ActiveMQConnectionFactory("tcp://" + address);
             Connection connection = connectionFactory.createConnection();
             connection.start();

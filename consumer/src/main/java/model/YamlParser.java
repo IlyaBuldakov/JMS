@@ -11,7 +11,7 @@ public class YamlParser {
 
     private static final String PATH_TO_PROPERTIES = "consumer/src/main/resources/properties.yaml";
 
-    public <T> T getValueFromProperties(Class<T> clazz, String key) throws FileNotFoundException {
+    public <T> T getValueFromProperties(String key) throws FileNotFoundException {
         InputStream inputStream = new FileInputStream(PATH_TO_PROPERTIES);
         Yaml yaml = new Yaml();
         Map<String, T> data = yaml.load(inputStream);

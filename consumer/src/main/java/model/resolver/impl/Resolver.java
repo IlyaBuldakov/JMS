@@ -26,15 +26,15 @@ public class Resolver {
         Object obj = map.getValue();
         switch (key) {
             case CPU_PERCENT_LOAD -> {
-                int bound = yamlParser.getValueFromProperties(Integer.class, CPU_BOUND_YAML_KEY);
+                int bound = yamlParser.getValueFromProperties(CPU_BOUND_YAML_KEY);
                 return checkBounds(obj, bound);
             }
             case RAM_GB_LOAD -> {
-                int bound = yamlParser.getValueFromProperties(Integer.class, RAM_BOUND_YAML_KEY);
+                int bound = yamlParser.getValueFromProperties(RAM_BOUND_YAML_KEY);
                 return checkBounds(obj, bound);
             }
             case DISK_GB_FREE_SPACE -> {
-                int bound = yamlParser.getValueFromProperties(Integer.class, DISK_SPACE_BOUND_YAML_KEY);
+                int bound = yamlParser.getValueFromProperties(DISK_SPACE_BOUND_YAML_KEY);
                 return checkBounds(obj, bound);
             }
             default -> {
