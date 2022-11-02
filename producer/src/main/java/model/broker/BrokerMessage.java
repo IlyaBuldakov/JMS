@@ -1,5 +1,6 @@
 package model.broker;
 
+import model.SerializablePair;
 import model.hardware.Metrics;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public record BrokerMessage(UUID id, ZonedDateTime dateTime, List<Map<Metrics, Object>> value) implements Serializable {
+public record BrokerMessage(UUID id, ZonedDateTime dateTime, List<SerializablePair<Metrics, Object>> value) implements Serializable {
 
     @Override
     public String toString() {

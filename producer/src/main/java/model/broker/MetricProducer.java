@@ -1,16 +1,19 @@
 package model.broker;
 
+import model.SerializablePair;
 import model.hardware.Metrics;
 import view.ApplicationView;
 
-import javax.jms.*;
+import javax.jms.BytesMessage;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.Topic;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class MetricProducer {
@@ -24,7 +27,7 @@ public class MetricProducer {
         this.brokerEnv = brokerEnv;
     }
 
-    public void send(List<Map<Metrics, Object>> metrics) {
+    public void send(List<SerializablePair<Metrics, Object>> metrics) {
         try {
             BrokerMessage brokerMessage = new BrokerMessage(
                     UUID.randomUUID(),

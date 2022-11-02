@@ -1,5 +1,6 @@
 package model.service;
 
+import model.SerializablePair;
 import model.broker.MetricProducer;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
@@ -10,7 +11,6 @@ import view.ApplicationView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class MessageService {
@@ -33,7 +33,7 @@ public class MessageService {
     public void proceed() {
         while (true) {
             delay(1000);
-            List<Map<Metrics, Object>> analysedInfo = new ArrayList<>();
+            List<SerializablePair<Metrics, Object>> analysedInfo = new ArrayList<>();
             for (HardwareAnalyser analyser : hardwareAnalysers) {
                 analysedInfo.add(analyser.analyse());
             }

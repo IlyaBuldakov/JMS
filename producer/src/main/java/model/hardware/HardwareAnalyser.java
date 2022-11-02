@@ -1,8 +1,8 @@
 package model.hardware;
 
-import java.util.Map;
+import model.SerializablePair;
 
 public interface HardwareAnalyser {
 
-    Map<Metrics, Object> analyse();
+    SerializablePair<Metrics, Object> analyse();
 }

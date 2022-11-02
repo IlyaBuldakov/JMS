@@ -1,10 +1,10 @@
 package model.resolver.impl;
 
+import model.SerializablePair;
 import model.YamlParser;
 import model.hardware.Metrics;
 
 import java.io.FileNotFoundException;
-import java.util.Map;
 import java.util.Optional;
 
 public class Resolver {
@@ -21,21 +21,21 @@ public class Resolver {
         this.yamlParser = yamlParser;
     }
 
-    public Optional<Number> resolve(Map.Entry<Metrics, Object> map) throws FileNotFoundException {
+    public Optional<Object> resolve(SerializablePair<Metrics, Object> map) throws FileNotFoundException {
         Metrics key = map.getKey();
         Object obj = map.getValue();
         switch (key) {
             case CPU_PERCENT_LOAD -> {
                 int bound = yamlParser.getValueFromProperties(Integer.class, CPU_BOUND_YAML_KEY);
-                return checkBounds((double) obj, bound);
+                return checkBounds(obj, bound);
             }
             case RAM_GB_LOAD -> {
                 int bound = yamlParser.getValueFromProperties(Integer.class, RAM_BOUND_YAML_KEY);
-                return checkBounds((int) obj, bound);
+                return checkBounds(obj, bound);
             }
             case DISK_GB_FREE_SPACE -> {
                 int bound = yamlParser.getValueFromProperties(Integer.class, DISK_SPACE_BOUND_YAML_KEY);
-                return checkBounds((int) obj, bound);
+                return checkBounds(obj, bound);
             }
             default -> {
                 return Optional.empty();
@@ -43,8 +43,8 @@ public class Resolver {
         }
     }
 
-    private <T extends Number> Optional<T> checkBounds(T value, T bound) {
-        if ((double) value >= (double) bound) {
+    private Optional<Object> checkBounds(Object value, Integer bound) {
+        if (Double.parseDouble(String.valueOf(value)) >= Double.parseDouble(String.valueOf(bound))) {
             return Optional.of(value);
         }
         return Optional.empty();

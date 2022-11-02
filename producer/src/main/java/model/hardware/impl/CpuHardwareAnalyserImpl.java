@@ -1,12 +1,13 @@
 package model.hardware.impl;
 
+import model.SerializablePair;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.OptionalDouble;
 
 public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
 
@@ -16,12 +17,15 @@ public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
     private static final int CPU_LOAD_MAX_VALUE_PERCENT = 100;
 
     @Override
-    public Map<Metrics, Object> analyse() {
-        double[] cpusLoad = Arrays
+    public SerializablePair<Metrics, Object> analyse() {
+        OptionalDouble maxCpuLoad = Arrays
                 .stream(CPU.getProcessorCpuLoad(1000))
-                .map(value -> value * CPU_LOAD_MAX_VALUE_PERCENT).toArray();
-        return Map.of(
-                Metrics.CPU_PERCENT_LOAD,
-                cpusLoad);
+                .max();
+        if (maxCpuLoad.isPresent()) {
+            return new SerializablePair<>(
+                    Metrics.CPU_PERCENT_LOAD,
+                    maxCpuLoad.getAsDouble() * CPU_LOAD_MAX_VALUE_PERCENT);
+        }
+        throw new IllegalStateException("Can't access the CPU ");
     }
 }
