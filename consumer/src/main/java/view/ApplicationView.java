@@ -24,6 +24,12 @@ public class ApplicationView {
         }
     }
 
+    public void handleWarnLog(Object message) {
+        if (LOG.isWarnEnabled()) {
+            LOG.warn(String.valueOf(message));
+        }
+    }
+
     public void handleErrorLog(String message) {
         if (LOG.isErrorEnabled()) {
             LOG.error(message);
