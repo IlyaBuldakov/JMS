@@ -1,11 +1,12 @@
 package controller;
 
+import model.PairResolver;
 import model.YamlParser;
 import model.broker.BrokerMessage;
 import model.broker.MetricReceiver;
-import model.PairResolver;
 import view.ApplicationView;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -29,13 +30,13 @@ public class MessageController {
             try {
                 delay(300);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
-                handleOptional(
-                        pairResolver.resolve(brokerMessage.value()
-                        .get(0)),
-                        pairResolver.resolve(brokerMessage.value()
-                        .get(1)),
-                        pairResolver.resolve(brokerMessage.value()
-                        .get(2)));
+                handleOptional(List.of(
+                                pairResolver.resolve(brokerMessage.value()
+                                        .get(0)),
+                                pairResolver.resolve(brokerMessage.value()
+                                        .get(1)),
+                                pairResolver.resolve(brokerMessage.value()
+                                        .get(2))));
             } catch (Exception exception) {
                 this.applicationView.handleException(exception);
             }
@@ -50,9 +51,12 @@ public class MessageController {
         }
     }
 
-    private void handleOptional(Optional<?>... optionals) {
+    private void handleOptional(List<Optional<?>> optionals) {
         for (Optional<?> optional : optionals) {
-            optional.ifPresent(this.applicationView::handleWarnLog);
+            if (optional.isPresent()) {
+                this.applicationView.handleString("OUTPUT | " + optional.get());
+                this.applicationView.handleWarnLog(optional.get());
+            }
         }
     }
 }
