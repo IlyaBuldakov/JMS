@@ -42,9 +42,16 @@ public class PairResolver {
     }
 
     private Optional<SerializablePair<Metrics, Object>> compareWithBound(Object value, Integer bound, Metrics metrics) {
-        if (Double.parseDouble(String.valueOf(value))
-                >= Double.parseDouble(String.valueOf(bound))) {
-            return Optional.of(new SerializablePair<>(metrics, value));
+        double doubleValue = Double.parseDouble(String.valueOf(value));
+        double doubleBound = Double.parseDouble(String.valueOf(bound));
+        if (metrics == Metrics.DISK_GB_FREE_SPACE) {
+            if (doubleValue <= doubleBound) {
+                return Optional.of(new SerializablePair<>(metrics, value));
+            }
+        } else {
+            if (doubleValue >= doubleBound) {
+                return Optional.of(new SerializablePair<>(metrics, value));
+            }
         }
         return Optional.empty();
     }
