@@ -19,21 +19,21 @@ public class PairResolver {
         this.yamlParser = yamlParser;
     }
 
-    public Optional<Object> resolve(SerializablePair<Metrics, Object> map) throws FileNotFoundException {
+    public Optional<SerializablePair<Metrics, Object>> resolve(SerializablePair<Metrics, Object> map) throws FileNotFoundException {
         Metrics key = map.getKey();
         Object obj = map.getValue();
         switch (key) {
             case CPU_PERCENT_LOAD -> {
                 int bound = yamlParser.getValueFromProperties(CPU_BOUND_YAML_KEY);
-                return checkBounds(obj, bound);
+                return checkBounds(obj, bound, Metrics.CPU_PERCENT_LOAD);
             }
             case RAM_GB_LOAD -> {
                 int bound = yamlParser.getValueFromProperties(RAM_BOUND_YAML_KEY);
-                return checkBounds(obj, bound);
+                return checkBounds(obj, bound, Metrics.RAM_GB_LOAD);
             }
             case DISK_GB_FREE_SPACE -> {
                 int bound = yamlParser.getValueFromProperties(DISK_SPACE_BOUND_YAML_KEY);
-                return checkBounds(obj, bound);
+                return checkBounds(obj, bound, Metrics.DISK_GB_FREE_SPACE);
             }
             default -> {
                 return Optional.empty();
@@ -41,9 +41,10 @@ public class PairResolver {
         }
     }
 
-    private Optional<Object> checkBounds(Object value, Integer bound) {
-        if (Double.parseDouble(String.valueOf(value)) >= Double.parseDouble(String.valueOf(bound))) {
-            return Optional.of(value);
+    private Optional<SerializablePair<Metrics, Object>> checkBounds(Object value, Integer bound, Metrics metrics) {
+        if (Double.parseDouble(String.valueOf(value))
+                >= Double.parseDouble(String.valueOf(bound))) {
+            return Optional.of(new SerializablePair<>(Metrics.DISK_GB_FREE_SPACE, value));
         }
         return Optional.empty();
     }
