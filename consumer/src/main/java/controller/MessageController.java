@@ -3,7 +3,7 @@ package controller;
 import model.YamlParser;
 import model.broker.BrokerMessage;
 import model.broker.MetricReceiver;
-import model.resolver.impl.Resolver;
+import model.PairResolver;
 import view.ApplicationView;
 
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class MessageController {
 
     private final YamlParser yamlParser = new YamlParser();
 
-    private final Resolver resolver = new Resolver(yamlParser);
+    private final PairResolver pairResolver = new PairResolver(yamlParser);
 
     public MessageController(MetricReceiver metricReceiver, ApplicationView applicationView) {
         this.metricReceiver = metricReceiver;
@@ -30,11 +30,11 @@ public class MessageController {
                 delay(1000);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
                 handleOptional(
-                        resolver.resolve(brokerMessage.value()
+                        pairResolver.resolve(brokerMessage.value()
                         .get(0)),
-                        resolver.resolve(brokerMessage.value()
+                        pairResolver.resolve(brokerMessage.value()
                         .get(1)),
-                        resolver.resolve(brokerMessage.value()
+                        pairResolver.resolve(brokerMessage.value()
                         .get(2)));
             } catch (Exception exception) {
                 this.applicationView.handleException(exception);

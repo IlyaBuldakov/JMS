@@ -1,13 +1,11 @@
-package model.resolver.impl;
+package model;
 
-import model.SerializablePair;
-import model.YamlParser;
 import model.hardware.Metrics;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
 
-public class Resolver {
+public class PairResolver {
 
     private static final String CPU_BOUND_YAML_KEY = "cpu-bound";
 
@@ -17,7 +15,7 @@ public class Resolver {
 
     private final YamlParser yamlParser;
 
-    public Resolver(YamlParser yamlParser) {
+    public PairResolver(YamlParser yamlParser) {
         this.yamlParser = yamlParser;
     }
 
