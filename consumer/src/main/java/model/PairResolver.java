@@ -25,15 +25,15 @@ public class PairResolver {
         switch (key) {
             case CPU_PERCENT_LOAD -> {
                 int bound = yamlParser.getValueFromProperties(CPU_BOUND_YAML_KEY);
-                return checkBounds(obj, bound, Metrics.CPU_PERCENT_LOAD);
+                return compareWithBound(obj, bound, Metrics.CPU_PERCENT_LOAD);
             }
             case RAM_GB_LOAD -> {
                 int bound = yamlParser.getValueFromProperties(RAM_BOUND_YAML_KEY);
-                return checkBounds(obj, bound, Metrics.RAM_GB_LOAD);
+                return compareWithBound(obj, bound, Metrics.RAM_GB_LOAD);
             }
             case DISK_GB_FREE_SPACE -> {
                 int bound = yamlParser.getValueFromProperties(DISK_SPACE_BOUND_YAML_KEY);
-                return checkBounds(obj, bound, Metrics.DISK_GB_FREE_SPACE);
+                return compareWithBound(obj, bound, Metrics.DISK_GB_FREE_SPACE);
             }
             default -> {
                 return Optional.empty();
@@ -41,10 +41,10 @@ public class PairResolver {
         }
     }
 
-    private Optional<SerializablePair<Metrics, Object>> checkBounds(Object value, Integer bound, Metrics metrics) {
+    private Optional<SerializablePair<Metrics, Object>> compareWithBound(Object value, Integer bound, Metrics metrics) {
         if (Double.parseDouble(String.valueOf(value))
                 >= Double.parseDouble(String.valueOf(bound))) {
-            return Optional.of(new SerializablePair<>(Metrics.DISK_GB_FREE_SPACE, value));
+            return Optional.of(new SerializablePair<>(metrics, value));
         }
         return Optional.empty();
     }
