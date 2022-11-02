@@ -8,8 +8,8 @@ public class ApplicationView {
 
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationView.class);
 
-    public void handleMessage(BrokerMessage brokerMessage) {
-        System.out.println(brokerMessage);
+    public void handleString(String message) {
+        System.out.println(message);
     }
 
     public void handleException(Exception exception) {
@@ -27,12 +27,6 @@ public class ApplicationView {
     public void handleWarnLog(Object message) {
         if (LOG.isWarnEnabled()) {
             LOG.warn(String.valueOf(message));
-        }
-    }
-
-    public void handleErrorLog(String message) {
-        if (LOG.isErrorEnabled()) {
-            LOG.error(message);
         }
     }
 }
