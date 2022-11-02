@@ -16,7 +16,7 @@ public class ServerApplication {
     public static void main(String[] args) {
         try {
             YamlParser yamlParser = new YamlParser();
-            String address = yamlParser.getValueFromProperties(String.class, BROKER_ADDRESS_YAML_KEY);
+            String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
             BrokerService broker = BrokerFactory.createBroker(new URI(
                     "broker:(tcp://" + address + ")"));
             broker.start();
