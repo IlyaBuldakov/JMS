@@ -27,7 +27,7 @@ public class MessageController {
     public void proceed() {
         while (true) {
             try {
-                delay(1000);
+                delay(300);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
                 handleOptional(
                         pairResolver.resolve(brokerMessage.value()
