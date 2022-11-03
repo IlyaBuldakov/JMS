@@ -1,6 +1,6 @@
 package model.hardware.impl;
 
-import model.SerializablePair;
+import model.pair.SerializablePair;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
 import oshi.SystemInfo;

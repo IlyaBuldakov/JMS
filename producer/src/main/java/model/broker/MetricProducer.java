@@ -1,6 +1,6 @@
 package model.broker;
 
-import model.SerializablePair;
+import model.pair.SerializablePair;
 import model.hardware.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

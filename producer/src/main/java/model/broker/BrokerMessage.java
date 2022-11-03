@@ -1,6 +1,6 @@
 package model.broker;
 
-import model.SerializablePair;
+import model.pair.SerializablePair;
 import model.hardware.Metrics;
 
 import java.io.Serializable;

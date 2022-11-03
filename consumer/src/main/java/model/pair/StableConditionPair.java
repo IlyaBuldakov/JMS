@@ -1,10 +1,12 @@
 package model.pair;
 
-public class StableConditionPair<T1, T2> extends SerializablePair<T1, T2> {
+import model.hardware.Metrics;
+
+public class StableConditionPair extends SerializablePair<Metrics, Object> {
 
     private static final String CONDITION_MESSAGE = "STABLE | ";
 
-    public StableConditionPair(T1 key, T2 value) {
+    public StableConditionPair(Metrics key, Object value) {
         super(key, value);
     }
 

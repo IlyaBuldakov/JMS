@@ -1,6 +1,6 @@
 package model.service;
 
-import model.SerializablePair;
+import model.pair.SerializablePair;
 import model.broker.MetricProducer;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;

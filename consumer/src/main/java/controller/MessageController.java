@@ -1,13 +1,11 @@
 package controller;
 
-import model.PairResolver;
 import model.YamlParser;
 import model.broker.BrokerMessage;
 import model.broker.MetricReceiver;
+import model.pair.PairResolver;
 import view.ApplicationView;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,28 +36,18 @@ public class MessageController {
             try {
                 delay(300);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
-                handleOptional(List.of(
+
+                this.applicationView.handlePairs(
                         pairResolver.resolve(brokerMessage.value()
                                 .get(0)),
                         pairResolver.resolve(brokerMessage.value()
                                 .get(1)),
                         pairResolver.resolve(brokerMessage.value()
-                                .get(2))));
+                                .get(2)));
+                this.applicationView.handleNewLine();
             } catch (Exception exception) {
                 this.applicationView.handleException(exception);
             }
-        }
-    }
-
-    /**
-     * Method which checks for the presence of an Optional value
-     * and outputs the result if there is a not-empty value.
-     *
-     * @param optionals Optional list.
-     */
-    private void handleOptional(List<Optional<?>> optionals) {
-        for (Optional<?> optional : optionals) {
-            optional.ifPresent(output -> this.applicationView.handleString(output.toString()));
         }
     }
 

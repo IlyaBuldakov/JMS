@@ -1,6 +1,6 @@
 package model.hardware;
 
-import model.SerializablePair;
+import model.pair.SerializablePair;
 
 /**
  * Interface that analyses hardware.

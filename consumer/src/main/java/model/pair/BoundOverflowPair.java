@@ -1,10 +1,12 @@
 package model.pair;
 
-public class BoundOverflowPair<T1, T2> extends SerializablePair<T1, T2> {
+import model.hardware.Metrics;
+
+public class BoundOverflowPair extends SerializablePair<Metrics, Object> {
 
     private static final String CONDITION_MESSAGE = "ALERT  | ";
 
-    public BoundOverflowPair(T1 key, T2 value) {
+    public BoundOverflowPair(Metrics key, Object value) {
         super(key, value);
     }
 
