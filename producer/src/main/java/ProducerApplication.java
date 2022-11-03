@@ -3,6 +3,9 @@ import model.broker.MetricProducer;
 import model.service.MessageService;
 import view.ApplicationView;
 
+/**
+ * Main producer class.
+ */
 public class ProducerApplication {
 
     private static final ApplicationView APPLICATION_VIEW = new ApplicationView();

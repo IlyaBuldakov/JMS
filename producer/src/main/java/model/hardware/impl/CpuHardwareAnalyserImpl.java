@@ -9,17 +9,32 @@ import oshi.hardware.CentralProcessor;
 import java.util.Arrays;
 import java.util.OptionalDouble;
 
+/**
+ * CPU load analyser.
+ */
 public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
 
+    /**
+     * CPU instance.
+     */
     private static final CentralProcessor CPU = new SystemInfo()
             .getHardware().getProcessor();
 
     private static final int CPU_LOAD_MAX_VALUE_PERCENT = 100;
 
+    private static final int CPU_LOAD_GET_METRIC_DELAY = 1000;
+
+    /**
+     * Main analyse method.
+     *
+     * @return {@link SerializablePair} with CPU metric.
+     * @throws IllegalArgumentException Exception throws
+     * then can't access the CPU.
+     */
     @Override
     public SerializablePair<Metrics, Object> analyse() {
         OptionalDouble maxCpuLoad = Arrays
-                .stream(CPU.getProcessorCpuLoad(1000))
+                .stream(CPU.getProcessorCpuLoad(CPU_LOAD_GET_METRIC_DELAY))
                 .max();
         if (maxCpuLoad.isPresent()) {
             return new SerializablePair<>(

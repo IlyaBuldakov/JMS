@@ -21,7 +21,7 @@ public class YamlParser {
      * Main parsing method.
      *
      * @param key Yaml key.
-     * @return ? extends Object (type T)
+     * @return ? extends Object (type T). Value by key param.
      * @param <T> Return type.
      * @throws FileNotFoundException Exception.
      */

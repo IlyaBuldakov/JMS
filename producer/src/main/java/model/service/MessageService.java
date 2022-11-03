@@ -13,16 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The layer that uses the hardware
+ * analyse layer and the broker layer.
+ */
 public class MessageService {
 
     private final ApplicationView applicationView;
 
+    /**
+     * Hardware layer (analysers).
+     */
     private final HardwareAnalyser[] hardwareAnalysers = {
             new CpuHardwareAnalyserImpl(),
             new DiskHardwareAnalyserImpl(),
             new RamHardwareAnalyserImpl()
     };
 
+    /**
+     * Broker layer (metric producer which sends info to broker).
+     */
     private final MetricProducer metricProducer;
 
     public MessageService(ApplicationView applicationView, MetricProducer metricProducer) {
@@ -30,6 +40,10 @@ public class MessageService {
         this.metricProducer = metricProducer;
     }
 
+    /**
+     * Service lifecycle.
+     * (gets metrics from analysers with delay)
+     */
     public void proceed() {
         while (true) {
             delay(300);
@@ -42,6 +56,11 @@ public class MessageService {
         }
     }
 
+    /**
+     * Delay method.
+     *
+     * @param millis Milliseconds.
+     */
     private void delay(long millis) {
         try {
             TimeUnit.MILLISECONDS.sleep(millis);

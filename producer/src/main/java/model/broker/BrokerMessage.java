@@ -8,9 +8,15 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Message from broker (JMS) representation.
+ *
+ * @param id Message ID.
+ * @param dateTime Send time.
+ * @param value Value. List of {@link SerializablePair} (metrics reports).
+ */
 public record BrokerMessage(UUID id, ZonedDateTime dateTime, List<SerializablePair<Metrics, Object>> value) implements Serializable {
 
     @Override

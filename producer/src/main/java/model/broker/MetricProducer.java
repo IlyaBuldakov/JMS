@@ -16,6 +16,10 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Class that creates {@link BrokerMessage}, translates
+ * it to byte array and sends it to broker.
+ */
 public class MetricProducer {
 
     private final ApplicationView applicationView;
@@ -27,6 +31,11 @@ public class MetricProducer {
         this.brokerEnv = brokerEnv;
     }
 
+    /**
+     * Send method.
+     *
+     * @param metrics Metric info (list of pairs).
+     */
     public void send(List<SerializablePair<Metrics, Object>> metrics) {
         try {
             BrokerMessage brokerMessage = new BrokerMessage(
