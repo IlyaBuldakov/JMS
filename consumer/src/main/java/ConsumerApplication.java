@@ -13,7 +13,7 @@ public class ConsumerApplication {
 
     private static final YamlParser YAML_PARSER = new YamlParser();
 
-    private static final BrokerEnvironmentHolder BROKER_ENV = new BrokerEnvironmentHolder(APPLICATION_VIEW, YAML_PARSER);
+    private static final BrokerEnvironmentHolder BROKER_ENV = new BrokerEnvironmentHolder(YAML_PARSER);
 
     private static final MetricReceiver METRIC_RECEIVER = new MetricReceiver(BROKER_ENV);
 

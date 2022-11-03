@@ -2,7 +2,8 @@ package model.broker;
 
 import model.YamlParser;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import view.ApplicationView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -18,30 +19,32 @@ public class BrokerEnvironmentHolder {
 
     private static final String BROKER_ADDRESS_YAML_KEY = "address";
 
+    private static final String BROKER_INIT_FINISH_MESSAGE = "Broker environment initialized";
+
+    private static final Logger LOG = LoggerFactory.getLogger(BrokerEnvironmentHolder.class);
+
+    private static final String PROTOCOL_PREFIX = "tcp://";
+
     private static Session session;
 
     private static Topic topic;
-
-    private final ApplicationView applicationView;
-
 
     private final YamlParser yamlParser;
 
     private boolean isEnvironmentInitialized;
 
-    public BrokerEnvironmentHolder(ApplicationView applicationView, YamlParser yamlParser) {
-        this.applicationView = applicationView;
+    public BrokerEnvironmentHolder(YamlParser yamlParser) {
         this.yamlParser = yamlParser;
     }
 
-    public Topic getTopic() {
+    public Topic getTopic() throws Exception {
         if (!this.isEnvironmentInitialized) {
             initEnvironment();
         }
         return topic;
     }
 
-    public Session getSession() {
+    public Session getSession() throws Exception {
         if (!this.isEnvironmentInitialized) {
             initEnvironment();
         }
@@ -51,19 +54,15 @@ public class BrokerEnvironmentHolder {
     /**
      * Method that initializes session and topic.
      */
-    private void initEnvironment() {
+    private void initEnvironment() throws Exception {
         ConnectionFactory connectionFactory;
-        try {
-            String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
-            connectionFactory = new ActiveMQConnectionFactory("tcp://" + address);
-            Connection connection = connectionFactory.createConnection();
-            connection.start();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            topic = session.createTopic(TOPIC_NAME);
-            this.isEnvironmentInitialized = true;
-            this.applicationView.handleInfoLog("CONSUMER | Broker environment initialized");
-        } catch (Exception exception) {
-            this.applicationView.handleException(exception);
-        }
+        String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
+        connectionFactory = new ActiveMQConnectionFactory(PROTOCOL_PREFIX + address);
+        Connection connection = connectionFactory.createConnection();
+        connection.start();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        topic = session.createTopic(TOPIC_NAME);
+        this.isEnvironmentInitialized = true;
+        LOG.info(BROKER_INIT_FINISH_MESSAGE);
     }
 }

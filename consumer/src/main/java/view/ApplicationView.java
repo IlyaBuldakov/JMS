@@ -34,26 +34,4 @@ public class ApplicationView {
         System.err.println(text);
         LOG.error(text);
     }
-
-    /**
-     * Info log handler.
-     *
-     * @param message {@link String} message.
-     */
-    public void handleInfoLog(String message) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info(message);
-        }
-    }
-
-    /**
-     * Warn log handler.
-     *
-     * @param message {@link String} message.
-     */
-    public void handleWarnLog(Object message) {
-        if (LOG.isWarnEnabled()) {
-            LOG.warn(String.valueOf(message));
-        }
-    }
 }
