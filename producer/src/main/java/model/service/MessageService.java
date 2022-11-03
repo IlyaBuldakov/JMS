@@ -46,13 +46,17 @@ public class MessageService {
      */
     public void proceed() {
         while (true) {
-            delay(300);
-            List<SerializablePair<Metrics, Object>> analysedInfo = new ArrayList<>();
-            for (HardwareAnalyser analyser : hardwareAnalysers) {
-                analysedInfo.add(analyser.analyse());
+            try {
+                delay(300);
+                List<SerializablePair<Metrics, Object>> analysedInfo = new ArrayList<>();
+                for (HardwareAnalyser analyser : hardwareAnalysers) {
+                    analysedInfo.add(analyser.analyse());
+                }
+                metricProducer.send(analysedInfo);
+                this.applicationView.handleInfoLog("PRODUCER | Send analysed info");
+            } catch (Exception exception) {
+                this.applicationView.handleException(exception);
             }
-            metricProducer.send(analysedInfo);
-            this.applicationView.handleInfoLog("PRODUCER | Send analysed info");
         }
     }
 

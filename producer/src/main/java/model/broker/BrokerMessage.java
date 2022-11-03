@@ -17,7 +17,8 @@ import java.util.UUID;
  * @param dateTime Send time.
  * @param value Value. List of {@link SerializablePair} (metrics reports).
  */
-public record BrokerMessage(UUID id, ZonedDateTime dateTime, List<SerializablePair<Metrics, Object>> value) implements Serializable {
+public record BrokerMessage(UUID id, ZonedDateTime dateTime, List<SerializablePair<Metrics, Object>> value)
+        implements Serializable {
 
     @Override
     public String toString() {

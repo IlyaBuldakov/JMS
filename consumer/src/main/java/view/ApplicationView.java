@@ -13,13 +13,15 @@ public class ApplicationView {
      */
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationView.class);
 
+    private static final String OUTPUT_PREFIX = "OUTPUT | ";
+
     /**
      * Outputs string message.
      *
      * @param message {@link String} message.
      */
     public void handleString(String message) {
-        System.out.println(message);
+        System.out.println(OUTPUT_PREFIX + message);
     }
 
     /**

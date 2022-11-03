@@ -4,10 +4,7 @@ import model.YamlParser;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import view.ApplicationView;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Session;
-import javax.jms.Topic;
+import javax.jms.*;
 
 /**
  * {@link Session} and {@link Topic} holder.
@@ -30,14 +27,14 @@ public class BrokerEnvironmentHolder {
         this.applicationView = applicationView;
     }
 
-    public Topic getTopic() {
+    public Topic getTopic() throws Exception {
         if (!this.isEnvironmentInitialized) {
             initEnvironment();
         }
         return topic;
     }
 
-    public Session getSession() {
+    public Session getSession() throws Exception {
         if (!this.isEnvironmentInitialized) {
             initEnvironment();
         }
@@ -47,20 +44,16 @@ public class BrokerEnvironmentHolder {
     /**
      * Method that initializes session and topic.
      */
-    private void initEnvironment() {
+    private void initEnvironment() throws Exception {
         YamlParser yamlParser = new YamlParser();
         ConnectionFactory connectionFactory;
-        try {
-            String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
-            connectionFactory = new ActiveMQConnectionFactory("tcp://" + address);
-            Connection connection = connectionFactory.createConnection();
-            connection.start();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            topic = session.createTopic(TOPIC_NAME);
-            this.isEnvironmentInitialized = true;
-            this.applicationView.handleInfoLog("CONSUMER | Broker environment initialized");
-        } catch (Exception exception) {
-            this.applicationView.handleException(exception);
-        }
+        String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
+        connectionFactory = new ActiveMQConnectionFactory("tcp://" + address);
+        Connection connection = connectionFactory.createConnection();
+        connection.start();
+        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        topic = session.createTopic(TOPIC_NAME);
+        this.isEnvironmentInitialized = true;
+        this.applicationView.handleInfoLog("CONSUMER | Broker environment initialized");
     }
 }

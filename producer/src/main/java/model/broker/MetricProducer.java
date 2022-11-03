@@ -36,32 +36,28 @@ public class MetricProducer {
      *
      * @param metrics Metric info (list of pairs).
      */
-    public void send(List<SerializablePair<Metrics, Object>> metrics) {
-        try {
-            BrokerMessage brokerMessage = new BrokerMessage(
-                    UUID.randomUUID(),
-                    ZonedDateTime.now(),
-                    metrics
-            );
+    public void send(List<SerializablePair<Metrics, Object>> metrics) throws Exception {
+        BrokerMessage brokerMessage = new BrokerMessage(
+                UUID.randomUUID(),
+                ZonedDateTime.now(),
+                metrics
+        );
 
-            Session activeSession = this.brokerEnv.getSession();
-            Topic topic = this.brokerEnv.getTopic();
+        Session activeSession = this.brokerEnv.getSession();
+        Topic topic = this.brokerEnv.getTopic();
 
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(buffer);
-            oos.writeObject(brokerMessage);
-            byte[] brokerMessageBytes = buffer.toByteArray();
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(buffer);
+        oos.writeObject(brokerMessage);
+        byte[] brokerMessageBytes = buffer.toByteArray();
 
-            BytesMessage message = activeSession.createBytesMessage();
-            message.writeBytes(brokerMessageBytes);
-            MessageProducer producer = activeSession.createProducer(topic);
-            producer.send(message);
-            this.applicationView.handleInfoLog("Message %s | %s send.".formatted(brokerMessage.id(), brokerMessage.value()));
+        BytesMessage message = activeSession.createBytesMessage();
+        message.writeBytes(brokerMessageBytes);
+        MessageProducer producer = activeSession.createProducer(topic);
+        producer.send(message);
+        this.applicationView.handleInfoLog("Message %s | %s send.".formatted(brokerMessage.id(), brokerMessage.value()));
 
-            buffer.close();
-            oos.close();
-        } catch (JMSException | IOException exception) {
-            this.applicationView.handleException(exception);
-        }
+        buffer.close();
+        oos.close();
     }
 }

@@ -60,7 +60,7 @@ public class MessageController {
     private void handleOptional(List<Optional<?>> optionals) {
         for (Optional<?> optional : optionals) {
             if (optional.isPresent()) {
-                this.applicationView.handleString("OUTPUT | " + optional.get());
+                this.applicationView.handleString(optional.get().toString());
                 this.applicationView.handleWarnLog(optional.get());
             }
         }
