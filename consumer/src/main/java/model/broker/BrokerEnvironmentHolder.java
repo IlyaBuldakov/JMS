@@ -9,6 +9,9 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Session;
 import javax.jms.Topic;
 
+/**
+ * {@link Session} and {@link Topic} holder.
+ */
 public class BrokerEnvironmentHolder {
 
     private static final String TOPIC_NAME = "alerts";
@@ -45,6 +48,9 @@ public class BrokerEnvironmentHolder {
         return session;
     }
 
+    /**
+     * Method that initializes session and topic.
+     */
     private void initEnvironment() {
         ConnectionFactory connectionFactory;
         try {

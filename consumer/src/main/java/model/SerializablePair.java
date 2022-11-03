@@ -2,6 +2,12 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * {@link java.util.Map.Entry} serializable substitution.
+ *
+ * @param <T1> Key (param1).
+ * @param <T2> Value (param2).
+ */
 public class SerializablePair<T1, T2> implements Serializable {
 
     T1 key;

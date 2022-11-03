@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Class which receives a {@link BrokerMessage message} from
+ * {@link MetricReceiver} and processes this incoming data.
+ */
 public class MessageController {
 
     private final MetricReceiver metricReceiver;
@@ -25,38 +29,53 @@ public class MessageController {
         this.applicationView = applicationView;
     }
 
+    /**
+     * Starts controller's lifecycle.
+     * Handling incoming JMS messages in loop.
+     */
     public void proceed() {
         while (true) {
             try {
                 delay(300);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
                 handleOptional(List.of(
-                                pairResolver.resolve(brokerMessage.value()
-                                        .get(0)),
-                                pairResolver.resolve(brokerMessage.value()
-                                        .get(1)),
-                                pairResolver.resolve(brokerMessage.value()
-                                        .get(2))));
+                        pairResolver.resolve(brokerMessage.value()
+                                .get(0)),
+                        pairResolver.resolve(brokerMessage.value()
+                                .get(1)),
+                        pairResolver.resolve(brokerMessage.value()
+                                .get(2))));
             } catch (Exception exception) {
                 this.applicationView.handleException(exception);
             }
         }
     }
 
-    private void delay(long millis) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(millis);
-        } catch (InterruptedException e) {
-            this.applicationView.handleException(e);
-        }
-    }
-
+    /**
+     * Method which checks for the presence of an Optional value
+     * and outputs the result if there is a not-empty value.
+     *
+     * @param optionals Optional list.
+     */
     private void handleOptional(List<Optional<?>> optionals) {
         for (Optional<?> optional : optionals) {
             if (optional.isPresent()) {
                 this.applicationView.handleString("OUTPUT | " + optional.get());
                 this.applicationView.handleWarnLog(optional.get());
             }
+        }
+    }
+
+    /**
+     * Delay method.
+     *
+     * @param millis Milliseconds.
+     */
+    private void delay(long millis) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(millis);
+        } catch (InterruptedException e) {
+            this.applicationView.handleException(e);
         }
     }
 }

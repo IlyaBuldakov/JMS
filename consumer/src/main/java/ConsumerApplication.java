@@ -4,6 +4,9 @@ import model.broker.BrokerEnvironmentHolder;
 import model.broker.MetricReceiver;
 import view.ApplicationView;
 
+/**
+ * Main consumer class.
+ */
 public class ConsumerApplication {
 
     private static final ApplicationView APPLICATION_VIEW = new ApplicationView();

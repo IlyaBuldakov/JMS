@@ -8,6 +8,10 @@ import javax.jms.Topic;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 
+/**
+ * Class that receives byte array from the broker
+ * and translates it to {@link BrokerMessage}.
+ */
 public class MetricReceiver {
 
     private final BrokerEnvironmentHolder brokerEnv;
@@ -16,6 +20,12 @@ public class MetricReceiver {
         this.brokerEnv = brokerEnv;
     }
 
+    /**
+     * Main receiver method.
+     *
+     * @return {@link BrokerMessage}.
+     * @throws Exception Exception.
+     */
     public BrokerMessage receive() throws Exception {
         Session activeSession = this.brokerEnv.getSession();
         Topic topic = this.brokerEnv.getTopic();
