@@ -22,7 +22,9 @@ public class AlertLogWriter {
 
   public void write(Map.Entry<Metrics, Object> entry) throws IOException {
     if (writer == null) {
-      Files.createDirectory(FOLDER_NAME);
+      if (!Files.exists(FOLDER_NAME)) {
+        Files.createDirectory(FOLDER_NAME);
+      }
       String fullPath = FOLDER_NAME + "/" + FILE_NAME + FILE_EXTENSION;
       new File(fullPath);
       writer = new BufferedWriter(new FileWriter(fullPath, true));
