@@ -45,33 +45,29 @@ public class StatusResolver {
     switch (key) {
       case CPU_PERCENT_LOAD -> {
         int bound = yamlParser.getValueFromProperties(CPU_BOUND_YAML_KEY);
-        if (specifyCondition(
-                (val) -> val >= bound, doubleValue)) {
-          alertLogWriter.write(entry);
-          return MESSAGE_STATUS_ALERT;
-        }
+        return specifyCondition(
+                (val) -> val >= bound, doubleValue, entry);
       }
       case RAM_GB_LOAD -> {
         int bound = yamlParser.getValueFromProperties(RAM_BOUND_YAML_KEY);
-        if (specifyCondition(
-                (val -> val >= bound), doubleValue)) {
-          alertLogWriter.write(entry);
-          return MESSAGE_STATUS_ALERT;
-        }
+        return specifyCondition(
+                (val -> val >= bound), doubleValue, entry);
       }
       case DISK_GB_FREE_SPACE -> {
         int bound = yamlParser.getValueFromProperties(DISK_SPACE_BOUND_YAML_KEY);
-        if (specifyCondition(
-                (val -> val <= bound), doubleValue)) {
-          alertLogWriter.write(entry);
-          return MESSAGE_STATUS_ALERT;
-        }
+        return specifyCondition(
+                (val -> val <= bound), doubleValue, entry);
       }
     }
     return MESSAGE_STATUS_STABLE;
   }
 
-  private boolean specifyCondition(DoublePredicate predicate, double value) {
-    return predicate.test(value);
+  private String specifyCondition(DoublePredicate predicate, double value, Map.Entry<Metrics, Object> entry) throws IOException {
+    if (predicate.test(value)) {
+      alertLogWriter.write(entry);
+      return MESSAGE_STATUS_ALERT;
+    }
+    return MESSAGE_STATUS_STABLE;
   }
 }
+
