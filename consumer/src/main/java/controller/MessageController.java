@@ -1,5 +1,6 @@
 package controller;
 
+import model.AlertLogWriter;
 import model.YamlParser;
 import model.broker.BrokerMessage;
 import model.broker.MetricReceiver;
@@ -20,7 +21,9 @@ public class MessageController {
 
     private final YamlParser yamlParser = new YamlParser();
 
-    private final StatusResolver statusResolver = new StatusResolver(yamlParser);
+    private final AlertLogWriter alertLogWriter = new AlertLogWriter();
+
+    private final StatusResolver statusResolver = new StatusResolver(yamlParser, alertLogWriter);
 
     public MessageController(MetricReceiver metricReceiver, ApplicationView applicationView) {
         this.metricReceiver = metricReceiver;

@@ -1,6 +1,6 @@
 package model;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoublePredicate;
@@ -20,30 +20,34 @@ public class StatusResolver {
 
   private final YamlParser yamlParser;
 
-  public StatusResolver(YamlParser yamlParser) {
+  private final AlertLogWriter alertLogWriter;
+
+  public StatusResolver(YamlParser yamlParser, AlertLogWriter alertLogWriter) {
     this.yamlParser = yamlParser;
+    this.alertLogWriter = alertLogWriter;
   }
 
   public HashMap<Map.Entry<Metrics, Object>, String> resolve(HashMap<Metrics, Object> metricsMap)
-          throws FileNotFoundException {
+          throws IOException {
     HashMap<Map.Entry<Metrics, Object>, String> resultMap = new HashMap<>();
     for (Map.Entry<Metrics, Object> entry : metricsMap.entrySet()) {
-      Metrics key = entry.getKey();
-      Object value = entry.getValue();
       resultMap.put(
-              Map.entry(key, value),
-              getMessageStatus(key, value));
+              entry,
+              getMessageStatus(entry));
     }
     return resultMap;
   }
 
-  private String getMessageStatus(Metrics key, Object value) throws FileNotFoundException {
+  private String getMessageStatus(Map.Entry<Metrics, Object> entry) throws IOException {
+    Metrics key = entry.getKey();
+    Object value = entry.getValue();
     double doubleValue = Double.parseDouble(String.valueOf(value));
     switch (key) {
       case CPU_PERCENT_LOAD -> {
         int bound = yamlParser.getValueFromProperties(CPU_BOUND_YAML_KEY);
         if (specifyCondition(
                 (val) -> val >= bound, doubleValue)) {
+          alertLogWriter.write(entry);
           return MESSAGE_STATUS_ALERT;
         }
       }
@@ -51,6 +55,7 @@ public class StatusResolver {
         int bound = yamlParser.getValueFromProperties(RAM_BOUND_YAML_KEY);
         if (specifyCondition(
                 (val -> val >= bound), doubleValue)) {
+          alertLogWriter.write(entry);
           return MESSAGE_STATUS_ALERT;
         }
       }
@@ -58,6 +63,7 @@ public class StatusResolver {
         int bound = yamlParser.getValueFromProperties(DISK_SPACE_BOUND_YAML_KEY);
         if (specifyCondition(
                 (val -> val <= bound), doubleValue)) {
+          alertLogWriter.write(entry);
           return MESSAGE_STATUS_ALERT;
         }
       }
