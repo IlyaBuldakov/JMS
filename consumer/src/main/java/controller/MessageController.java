@@ -3,7 +3,7 @@ package controller;
 import model.YamlParser;
 import model.broker.BrokerMessage;
 import model.broker.MetricReceiver;
-import model.pair.PairResolver;
+import model.StatusResolver;
 import view.ApplicationView;
 
 import java.util.concurrent.TimeUnit;
@@ -20,7 +20,7 @@ public class MessageController {
 
     private final YamlParser yamlParser = new YamlParser();
 
-    private final PairResolver pairResolver = new PairResolver(yamlParser);
+    private final StatusResolver statusResolver = new StatusResolver(yamlParser);
 
     public MessageController(MetricReceiver metricReceiver, ApplicationView applicationView) {
         this.metricReceiver = metricReceiver;
@@ -36,15 +36,7 @@ public class MessageController {
             try {
                 delay(300);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
-
-                this.applicationView.handlePairs(
-                        pairResolver.resolve(brokerMessage.value()
-                                .get(0)),
-                        pairResolver.resolve(brokerMessage.value()
-                                .get(1)),
-                        pairResolver.resolve(brokerMessage.value()
-                                .get(2)));
-                this.applicationView.handleNewLine();
+                this.applicationView.handleMap(statusResolver.resolve(brokerMessage.value()));
             } catch (Exception exception) {
                 this.applicationView.handleException(exception);
             }

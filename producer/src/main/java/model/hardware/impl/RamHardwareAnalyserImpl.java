@@ -1,6 +1,6 @@
 package model.hardware.impl;
 
-import model.pair.SerializablePair;
+import java.util.Map;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
 import oshi.SystemInfo;
@@ -16,14 +16,9 @@ public class RamHardwareAnalyserImpl implements HardwareAnalyser {
 
     private static final int BYTES_IN_GB = 1_073_741_824;
 
-    /**
-     * Main analyse method.
-     *
-     * @return {@link SerializablePair} with RAM metric.
-     */
     @Override
-    public SerializablePair<Metrics, Object> analyse() {
-        return new SerializablePair<>(
+    public Map.Entry<Metrics, Object> analyse() {
+        return Map.entry(
                 Metrics.RAM_GB_LOAD,
                 ((GLOBAL_MEMORY.getTotal() - GLOBAL_MEMORY.getAvailable()) / BYTES_IN_GB));
     }

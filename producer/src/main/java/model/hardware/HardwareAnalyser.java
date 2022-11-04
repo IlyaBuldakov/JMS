@@ -1,17 +1,11 @@
 package model.hardware;
 
-import model.pair.SerializablePair;
+import java.util.Map;
 
 /**
  * Interface that analyses hardware.
  */
 public interface HardwareAnalyser {
 
-    /**
-     * Analyse method.
-     *
-     * @return {@link SerializablePair} of
-     * {@link Metrics} and value ({@link Object}).
-     */
-    SerializablePair<Metrics, Object> analyse();
+    Map.Entry<Metrics, Object> analyse();
 }

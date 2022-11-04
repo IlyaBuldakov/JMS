@@ -1,46 +1,38 @@
 package model.hardware.impl;
 
-import model.pair.SerializablePair;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.OptionalDouble;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
-
-import java.util.Arrays;
-import java.util.OptionalDouble;
 
 /**
  * CPU load analyser.
  */
 public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
 
-    /**
-     * CPU instance.
-     */
-    private static final CentralProcessor CPU = new SystemInfo()
-            .getHardware().getProcessor();
+  /**
+   * CPU instance.
+   */
+  private static final CentralProcessor CPU = new SystemInfo()
+          .getHardware().getProcessor();
 
-    private static final int CPU_LOAD_MAX_VALUE_PERCENT = 100;
+  private static final int CPU_LOAD_MAX_VALUE_PERCENT = 100;
 
-    private static final int CPU_LOAD_GET_METRIC_DELAY = 1000;
+  private static final int CPU_LOAD_GET_METRIC_DELAY = 1000;
 
-    /**
-     * Main analyse method.
-     *
-     * @return {@link SerializablePair} with CPU metric.
-     * @throws IllegalArgumentException Exception throws
-     * then can't access the CPU.
-     */
-    @Override
-    public SerializablePair<Metrics, Object> analyse() {
-        OptionalDouble maxCpuLoad = Arrays
-                .stream(CPU.getProcessorCpuLoad(CPU_LOAD_GET_METRIC_DELAY))
-                .max();
-        if (maxCpuLoad.isPresent()) {
-            return new SerializablePair<>(
-                    Metrics.CPU_PERCENT_LOAD,
-                    maxCpuLoad.getAsDouble() * CPU_LOAD_MAX_VALUE_PERCENT);
-        }
-        throw new IllegalStateException("Can't access the CPU ");
+  @Override
+  public Map.Entry<Metrics, Object> analyse() {
+    OptionalDouble maxCpuLoad = Arrays
+            .stream(CPU.getProcessorCpuLoad(CPU_LOAD_GET_METRIC_DELAY))
+            .max();
+    if (maxCpuLoad.isPresent()) {
+      return Map.entry(
+              Metrics.CPU_PERCENT_LOAD,
+              maxCpuLoad.getAsDouble() * CPU_LOAD_MAX_VALUE_PERCENT);
     }
+    throw new IllegalStateException("Can't access the CPU ");
+  }
 }

@@ -1,6 +1,6 @@
 package model.hardware.impl;
 
-import model.pair.SerializablePair;
+import java.util.Map;
 import model.hardware.HardwareAnalyser;
 import model.hardware.Metrics;
 import oshi.SystemInfo;
@@ -17,15 +17,10 @@ public class DiskHardwareAnalyserImpl implements HardwareAnalyser {
 
     private static final int BYTES_IN_GB = 1_073_741_824;
 
-    /**
-     * Main analyse method.
-     *
-     * @return {@link SerializablePair} with disk metric.
-     */
     @Override
-    public SerializablePair<Metrics, Object> analyse() {
+    public Map.Entry<Metrics, Object> analyse() {
         OSFileStore fileStore = FILE_SYSTEM.getFileStores().get(0);
-        return new SerializablePair<>(
+        return Map.entry(
                 Metrics.DISK_GB_FREE_SPACE,
                 (fileStore.getFreeSpace() / BYTES_IN_GB));
     }
