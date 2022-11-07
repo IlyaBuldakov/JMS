@@ -1,4 +1,4 @@
-package ru.develonica.view;
+package ru.develonica.common.view;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,16 +53,5 @@ public class ApplicationView {
             LOG.warn(exception.toString());
         }
         LOG.error(exceptionText);
-    }
-
-    /**
-     * Info log handler.
-     *
-     * @param message {@link String} message.
-     */
-    public void handleInfoLog(String message) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info(message);
-        }
     }
 }

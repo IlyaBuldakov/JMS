@@ -10,7 +10,7 @@ import ru.develonica.model.hardware.HardwareAnalyser;
 import ru.develonica.model.hardware.impl.CpuHardwareAnalyserImpl;
 import ru.develonica.model.hardware.impl.DiskHardwareAnalyserImpl;
 import ru.develonica.model.hardware.impl.RamHardwareAnalyserImpl;
-import ru.develonica.view.ApplicationView;
+import ru.develonica.view.ProducerView;
 
 /**
  * The layer that uses the hardware
@@ -22,7 +22,7 @@ public class MessageService {
 
   private static final String PRODUCER_SEND_MSG = "PRODUCER | Send analysed info";
 
-  private final ApplicationView applicationView;
+  private final ProducerView producerView;
 
   /**
    * Hardware layer (analysers).
@@ -38,8 +38,8 @@ public class MessageService {
    */
   private final MetricProducer metricProducer;
 
-  public MessageService(ApplicationView applicationView, MetricProducer metricProducer) {
-    this.applicationView = applicationView;
+  public MessageService(ProducerView producerView, MetricProducer metricProducer) {
+    this.producerView = producerView;
     this.metricProducer = metricProducer;
   }
 
@@ -57,9 +57,9 @@ public class MessageService {
           analysedInfo.put(entry.getKey(), entry.getValue());
         }
         metricProducer.send(analysedInfo);
-        this.applicationView.handleInfoLog(PRODUCER_SEND_MSG);
+        this.producerView.handleInfoLog(PRODUCER_SEND_MSG);
       } catch (Exception exception) {
-        this.applicationView.handleException(exception);
+        this.producerView.handleException(exception);
       }
     }
   }

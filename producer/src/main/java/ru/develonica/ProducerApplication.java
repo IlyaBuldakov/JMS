@@ -3,14 +3,14 @@ package ru.develonica;
 import ru.develonica.model.broker.BrokerEnvironmentHolder;
 import ru.develonica.model.broker.MetricProducer;
 import ru.develonica.model.service.MessageService;
-import ru.develonica.view.ApplicationView;
+import ru.develonica.view.ProducerView;
 
 /**
  * Main producer class.
  */
 public class ProducerApplication {
 
-    private static final ApplicationView APPLICATION_VIEW = new ApplicationView();
+    private static final ProducerView APPLICATION_VIEW = new ProducerView();
 
     private static final BrokerEnvironmentHolder BROKER_ENV = new BrokerEnvironmentHolder();
 
