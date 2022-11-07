@@ -16,16 +16,17 @@ public class ServerApplication {
 
     private static final ApplicationView APPLICATION_VIEW = new ApplicationView();
 
-    private static final String PROTOCOL_PREFIX = "broker:(tcp://";
+    private static final String BROKER_PROTOCOL = "broker:(tcp://%s)";
 
     public static void main(String[] args) {
         try {
             YamlParser yamlParser = new YamlParser();
             String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
-            BrokerService broker = BrokerFactory.createBroker(new URI(
-                    PROTOCOL_PREFIX + address + ")"));
+            BrokerService broker = BrokerFactory.createBroker(
+                    new URI(BROKER_PROTOCOL.formatted(address)));
             broker.start();
             Object lock = new Object();
+            // For continuous operation of the server.
             synchronized (lock) {
                 lock.wait();
             }

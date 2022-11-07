@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Main application ru.develonica.view class.
+ * Main application view class.
  */
 public class ApplicationView {
 
@@ -13,13 +13,15 @@ public class ApplicationView {
      */
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationView.class);
 
+    private static final String EXCEPTION_OUTPUT_PATTERN = "Exception: %s. %s";
+
     /**
      * Exception handler.
      *
      * @param exception Exception input.
      */
     public void handleException(Exception exception) {
-        String text = "Exception: %s. %s".formatted(exception.toString(), exception.getMessage());
+        String text = EXCEPTION_OUTPUT_PATTERN.formatted(exception.toString(), exception.getMessage());
         System.err.println(text);
         LOG.error(text);
     }

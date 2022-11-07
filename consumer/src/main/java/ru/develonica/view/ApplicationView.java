@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Main application ru.develonica.view class.
+ * Main application view class.
  */
 public class ApplicationView {
 
@@ -35,6 +35,11 @@ public class ApplicationView {
 
     private static final String SLEEPING_INTERRUPTED = "Sleeping interrupted...";
 
+    /**
+     * Map handler method.
+     *
+     * @param map Map of metrics.
+     */
     public void handleMap(HashMap<Map.Entry<Metrics, Object>, String> map) {
         for (Map.Entry<Map.Entry<Metrics, Object>, String> entry : map.entrySet()) {
             System.out.printf(PAIR_OUTPUT_PATTERN, entry.getKey(), entry.getValue());

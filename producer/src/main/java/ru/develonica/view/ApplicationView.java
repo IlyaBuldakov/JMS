@@ -48,7 +48,9 @@ public class ApplicationView {
                 LOG.warn(SLEEPING_INTERRUPTED);
             }
         } else {
+            System.out.println(INTERNAL_ERROR);
             System.out.println(exception.getMessage());
+            LOG.warn(exception.toString());
         }
         LOG.error(exceptionText);
     }

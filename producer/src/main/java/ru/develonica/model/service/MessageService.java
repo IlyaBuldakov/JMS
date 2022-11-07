@@ -18,6 +18,10 @@ import ru.develonica.view.ApplicationView;
  */
 public class MessageService {
 
+  private static final int MESSAGE_GET_REQUEST_DELAY = 300;
+
+  private static final String PRODUCER_SEND_MSG = "PRODUCER | Send analysed info";
+
   private final ApplicationView applicationView;
 
   /**
@@ -46,30 +50,17 @@ public class MessageService {
   public void proceed() {
     while (true) {
       try {
-        delay(300);
+        TimeUnit.MILLISECONDS.sleep(MESSAGE_GET_REQUEST_DELAY);
         HashMap<Metrics, Object> analysedInfo = new HashMap<>();
         for (HardwareAnalyser analyser : hardwareAnalysers) {
           Map.Entry<Metrics, Object> entry = analyser.analyse();
           analysedInfo.put(entry.getKey(), entry.getValue());
         }
         metricProducer.send(analysedInfo);
-        this.applicationView.handleInfoLog("PRODUCER | Send analysed info");
+        this.applicationView.handleInfoLog(PRODUCER_SEND_MSG);
       } catch (Exception exception) {
         this.applicationView.handleException(exception);
       }
-    }
-  }
-
-  /**
-   * Delay method.
-   *
-   * @param millis Milliseconds.
-   */
-  private void delay(long millis) {
-    try {
-      TimeUnit.MILLISECONDS.sleep(millis);
-    } catch (InterruptedException e) {
-      this.applicationView.handleException(e);
     }
   }
 }
