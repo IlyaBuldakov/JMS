@@ -2,7 +2,7 @@ package ru.develonica;
 
 import org.apache.activemq.broker.BrokerFactory;
 import org.apache.activemq.broker.BrokerService;
-import ru.develonica.model.YamlParser;
+import ru.develonica.common.model.YamlParser;
 import ru.develonica.view.ApplicationView;
 
 import java.net.URI;

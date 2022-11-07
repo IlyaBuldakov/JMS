@@ -1,6 +1,6 @@
 package ru.develonica.model.broker;
 
-import ru.develonica.model.YamlParser;
+import ru.develonica.common.model.YamlParser;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

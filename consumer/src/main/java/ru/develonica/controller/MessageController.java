@@ -1,7 +1,7 @@
 package ru.develonica.controller;
 
 import ru.develonica.model.AlertLogWriter;
-import ru.develonica.model.YamlParser;
+import ru.develonica.common.model.YamlParser;
 import ru.develonica.model.broker.BrokerMessage;
 import ru.develonica.model.broker.MetricReceiver;
 import ru.develonica.model.StatusResolver;

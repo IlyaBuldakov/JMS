@@ -1,4 +1,4 @@
-package ru.develonica.model;
+package ru.develonica.common.model;
 
 import org.yaml.snakeyaml.Yaml;
 

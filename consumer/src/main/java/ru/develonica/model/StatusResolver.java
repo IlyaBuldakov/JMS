@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoublePredicate;
+
+import ru.develonica.common.model.YamlParser;
 import ru.develonica.model.hardware.Metrics;
 
 public class StatusResolver {
@@ -18,7 +20,7 @@ public class StatusResolver {
 
   private static final String MESSAGE_STATUS_STABLE = "STABLE";
 
-  private final YamlParser yamlParser;
+  private final ru.develonica.common.model.YamlParser yamlParser;
 
   private final AlertLogWriter alertLogWriter;
 

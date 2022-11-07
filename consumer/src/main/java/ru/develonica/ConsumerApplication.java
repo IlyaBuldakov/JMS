@@ -1,7 +1,7 @@
 package ru.develonica;
 
 import ru.develonica.controller.MessageController;
-import ru.develonica.model.YamlParser;
+import ru.develonica.common.model.YamlParser;
 import ru.develonica.model.broker.BrokerEnvironmentHolder;
 import ru.develonica.model.broker.MetricReceiver;
 import ru.develonica.view.ApplicationView;
