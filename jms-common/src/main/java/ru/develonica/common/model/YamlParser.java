@@ -1,8 +1,11 @@
 package ru.develonica.common.model;
 
-import org.yaml.snakeyaml.Yaml;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
-import java.io.InputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -14,9 +17,9 @@ public class YamlParser {
 
     private static final String EXTENSION = ".yaml";
 
-    private final InputStream propertiesFileStream = this.getClass()
+    private final URL propertiesFileUrl = getClass()
             .getClassLoader()
-            .getResourceAsStream(FILE_PROPERTIES_NAME + EXTENSION);
+            .getResource(FILE_PROPERTIES_NAME + EXTENSION);
 
     /**
      * Main parsing method.
@@ -25,9 +28,10 @@ public class YamlParser {
      * @param <T> Return type.
      * @return ? extends Object (type T). Value by key param.
      */
-    public <T> T getValueFromProperties(String key) {
-        Yaml yaml = new Yaml();
-        Map<String, T> data = yaml.load(propertiesFileStream);
-        return data.get(key);
+    public <T> T getValueFromProperties(String key) throws IOException {
+        Map<String, T> properties
+                = new ObjectMapper(new YAMLFactory()).readValue(propertiesFileUrl, new TypeReference<>() {
+        });
+        return properties.get(key);
     }
 }
