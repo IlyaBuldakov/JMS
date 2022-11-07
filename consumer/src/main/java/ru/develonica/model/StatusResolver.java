@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.function.DoublePredicate;
 
 import ru.develonica.common.model.YamlParser;
-import ru.develonica.model.hardware.Metrics;
+import ru.develonica.common.model.hardware.Metrics;
 
 public class StatusResolver {
 

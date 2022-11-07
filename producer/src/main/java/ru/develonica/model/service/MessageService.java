@@ -3,9 +3,10 @@ package ru.develonica.model.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import ru.develonica.common.model.hardware.Metrics;
 import ru.develonica.model.broker.MetricProducer;
 import ru.develonica.model.hardware.HardwareAnalyser;
-import ru.develonica.model.hardware.Metrics;
 import ru.develonica.model.hardware.impl.CpuHardwareAnalyserImpl;
 import ru.develonica.model.hardware.impl.DiskHardwareAnalyserImpl;
 import ru.develonica.model.hardware.impl.RamHardwareAnalyserImpl;

@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.UUID;
-import ru.develonica.model.hardware.Metrics;
+import ru.develonica.common.model.hardware.Metrics;
 
 /**
  * Message from broker (JMS) representation.

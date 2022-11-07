@@ -3,8 +3,9 @@ package ru.develonica.model.hardware.impl;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.OptionalDouble;
+
+import ru.develonica.common.model.hardware.Metrics;
 import ru.develonica.model.hardware.HardwareAnalyser;
-import ru.develonica.model.hardware.Metrics;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 

@@ -1,12 +1,13 @@
 package ru.develonica.model.broker;
 
+import ru.develonica.common.model.hardware.Metrics;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.UUID;
-import ru.develonica.model.hardware.Metrics;
 
 /**
  * Message from broker (JMS) representation.

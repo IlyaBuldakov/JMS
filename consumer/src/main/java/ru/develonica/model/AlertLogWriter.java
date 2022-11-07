@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Map;
-import ru.develonica.model.hardware.Metrics;
+import ru.develonica.common.model.hardware.Metrics;
 
 public class AlertLogWriter {
 

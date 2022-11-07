@@ -9,9 +9,10 @@ import javax.jms.BytesMessage;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.Topic;
-import ru.develonica.model.hardware.Metrics;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.develonica.common.model.hardware.Metrics;
 
 /**
  * Class that creates {@link BrokerMessage}, translates

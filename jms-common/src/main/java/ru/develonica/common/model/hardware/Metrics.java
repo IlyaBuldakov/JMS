@@ -1,4 +1,4 @@
-package ru.develonica.model.hardware;
+package ru.develonica.common.model.hardware;
 
 /**
  * Metrics specifying warnings.

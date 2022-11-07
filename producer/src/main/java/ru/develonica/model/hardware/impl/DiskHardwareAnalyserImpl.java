@@ -1,8 +1,9 @@
 package ru.develonica.model.hardware.impl;
 
 import java.util.Map;
+
+import ru.develonica.common.model.hardware.Metrics;
 import ru.develonica.model.hardware.HardwareAnalyser;
-import ru.develonica.model.hardware.Metrics;
 import oshi.SystemInfo;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;

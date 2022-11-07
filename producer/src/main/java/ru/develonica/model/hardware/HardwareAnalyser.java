@@ -1,5 +1,7 @@
 package ru.develonica.model.hardware;
 
+import ru.develonica.common.model.hardware.Metrics;
+
 import java.util.Map;
 
 /**

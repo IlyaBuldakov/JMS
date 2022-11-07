@@ -2,7 +2,7 @@ package ru.develonica.view;
 
 import java.util.HashMap;
 import java.util.Map;
-import ru.develonica.model.hardware.Metrics;
+import ru.develonica.common.model.hardware.Metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
