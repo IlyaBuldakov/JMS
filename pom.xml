@@ -12,6 +12,7 @@
         <module>server</module>
         <module>producer</module>
         <module>consumer</module>
+        <module>jms-common</module>
     </modules>
 
     <properties>
