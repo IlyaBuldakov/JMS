@@ -8,6 +8,9 @@ import javax.jms.ConnectionFactory;
 import javax.jms.Session;
 import javax.jms.Topic;
 
+/**
+ * Abstract class-parent of broker environment holders.
+ */
 public abstract class AbstractBrokerEnvironmentHolder {
 
     private static final String TOPIC_NAME = "alerts";

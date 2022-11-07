@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class MessageController {
 
+    private static final int MESSAGE_GET_REQUEST_DELAY = 300;
+
     private final MetricReceiver metricReceiver;
 
     private final ApplicationView applicationView;
@@ -37,25 +39,12 @@ public class MessageController {
     public void proceed() {
         while (true) {
             try {
-                delay(300);
+                TimeUnit.MILLISECONDS.sleep(MESSAGE_GET_REQUEST_DELAY);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
                 this.applicationView.handleMap(statusResolver.resolve(brokerMessage.value()));
             } catch (Exception exception) {
                 this.applicationView.handleException(exception);
             }
-        }
-    }
-
-    /**
-     * Delay method.
-     *
-     * @param millis Milliseconds.
-     */
-    private void delay(long millis) {
-        try {
-            TimeUnit.MILLISECONDS.sleep(millis);
-        } catch (InterruptedException e) {
-            this.applicationView.handleException(e);
         }
     }
 }
