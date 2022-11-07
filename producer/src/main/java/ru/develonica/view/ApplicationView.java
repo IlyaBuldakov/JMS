@@ -23,4 +23,15 @@ public class ApplicationView {
         System.err.println(text);
         LOG.error(text);
     }
+
+    /**
+     * Info log handler.
+     *
+     * @param message {@link String} message.
+     */
+    public void handleInfoLog(String message) {
+        if (LOG.isInfoEnabled()) {
+            LOG.info(message);
+        }
+    }
 }
