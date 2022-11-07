@@ -2,8 +2,6 @@ package ru.develonica.model;
 
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -12,23 +10,24 @@ import java.util.Map;
  */
 public class YamlParser {
 
-    /**
-     * Path to yaml file (destination).
-     */
-    private static final String PATH_TO_PROPERTIES = "server/src/main/resources/properties.yaml";
+    private static final String FILE_PROPERTIES_NAME = "properties";
+
+    private static final String EXTENSION = ".yaml";
+
+    private final InputStream propertiesFileStream = this.getClass()
+            .getClassLoader()
+            .getResourceAsStream(FILE_PROPERTIES_NAME + EXTENSION);
 
     /**
      * Main parsing method.
      *
      * @param key Yaml key.
-     * @return ? extends Object (type T). Value by key param.
      * @param <T> Return type.
-     * @throws FileNotFoundException Exception.
+     * @return ? extends Object (type T). Value by key param.
      */
-    public <T> T getValueFromProperties(String key) throws FileNotFoundException {
-        InputStream inputStream = new FileInputStream(PATH_TO_PROPERTIES);
+    public <T> T getValueFromProperties(String key) {
         Yaml yaml = new Yaml();
-        Map<String, T> data = yaml.load(inputStream);
+        Map<String, T> data = yaml.load(propertiesFileStream);
         return data.get(key);
     }
 }
