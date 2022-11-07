@@ -16,9 +16,13 @@ public class ApplicationView {
    */
   private static final Logger LOG = LoggerFactory.getLogger(ApplicationView.class);
 
+  private static final String EXCEPTION_OUTPUT_PATTERN = "Exception: %s. %s";
+
+  private static final String PAIR_OUTPUT_PATTERN = "%s | %s";
+
   public void handleMap(HashMap<Map.Entry<Metrics, Object>, String> map) {
     for (Map.Entry<Map.Entry<Metrics, Object>, String> entry : map.entrySet()) {
-      System.out.printf("%s | %s", entry.getKey(), entry.getValue());
+      System.out.printf(PAIR_OUTPUT_PATTERN, entry.getKey(), entry.getValue());
       System.out.println();
     }
     System.out.println();
@@ -30,7 +34,7 @@ public class ApplicationView {
    * @param exception Exception input.
    */
   public void handleException(Exception exception) {
-    String text = "Exception: %s. %s".formatted(exception.toString(), exception.getMessage());
+    String text = EXCEPTION_OUTPUT_PATTERN.formatted(exception.toString(), exception.getMessage());
     System.err.println(text);
     LOG.error(text);
   }
