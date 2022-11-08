@@ -13,13 +13,13 @@ import javax.jms.Topic;
  */
 public abstract class AbstractBrokerEnvironmentHolder {
 
+    protected static final String BROKER_INIT_FINISH_MESSAGE = "%s broker environment initialized";
+
     private static final String TOPIC_NAME = "alerts";
 
     private static final String BROKER_ADDRESS_YAML_KEY = "address";
 
     private static final String PROTOCOL_PREFIX = "tcp://";
-
-    protected static final String BROKER_INIT_FINISH_MESSAGE = "%s broker environment initialized";
 
     private Session session;
 
