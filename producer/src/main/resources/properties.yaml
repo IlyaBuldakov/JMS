@@ -1,2 +1,5 @@
 # Broker address
 address: # Enter your address
+
+# Delay between sending a message
+delay: 300

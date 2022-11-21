@@ -1,9 +1,6 @@
 package ru.develonica.model.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
+import ru.develonica.common.model.YamlParser;
 import ru.develonica.common.model.hardware.Metrics;
 import ru.develonica.model.broker.MetricProducer;
 import ru.develonica.model.hardware.HardwareAnalyser;
@@ -12,55 +9,60 @@ import ru.develonica.model.hardware.impl.DiskHardwareAnalyserImpl;
 import ru.develonica.model.hardware.impl.RamHardwareAnalyserImpl;
 import ru.develonica.view.ProducerView;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 /**
  * The layer that uses the hardware
  * analyse layer and the broker layer.
  */
 public class MessageService {
 
-  private static final int MESSAGE_GET_REQUEST_DELAY = 300;
+    private static final String PRODUCER_SEND_MSG = "PRODUCER | Send analysed info";
 
-  private static final String PRODUCER_SEND_MSG = "PRODUCER | Send analysed info";
+    private final YamlParser yamlParser = new YamlParser();
 
-  private final ProducerView producerView;
+    private final ProducerView producerView;
 
-  /**
-   * Hardware layer (analysers).
-   */
-  private final HardwareAnalyser[] hardwareAnalysers = {
-          new CpuHardwareAnalyserImpl(),
-          new DiskHardwareAnalyserImpl(),
-          new RamHardwareAnalyserImpl()
-  };
+    /**
+     * Hardware layer (analysers).
+     */
+    private final HardwareAnalyser[] hardwareAnalysers = {
+            new CpuHardwareAnalyserImpl(),
+            new DiskHardwareAnalyserImpl(),
+            new RamHardwareAnalyserImpl()
+    };
 
-  /**
-   * Broker layer (metric producer which sends info to broker).
-   */
-  private final MetricProducer metricProducer;
+    /**
+     * Broker layer (metric producer which sends info to broker).
+     */
+    private final MetricProducer metricProducer;
 
-  public MessageService(ProducerView producerView, MetricProducer metricProducer) {
-    this.producerView = producerView;
-    this.metricProducer = metricProducer;
-  }
-
-  /**
-   * Service lifecycle.
-   * (gets metrics from analysers with delay)
-   */
-  public void proceed() {
-    while (true) {
-      try {
-        TimeUnit.MILLISECONDS.sleep(MESSAGE_GET_REQUEST_DELAY);
-        HashMap<Metrics, Object> analysedInfo = new HashMap<>();
-        for (HardwareAnalyser analyser : hardwareAnalysers) {
-          Map.Entry<Metrics, Object> entry = analyser.analyse();
-          analysedInfo.put(entry.getKey(), entry.getValue());
-        }
-        metricProducer.send(analysedInfo);
-        this.producerView.handleInfoLog(PRODUCER_SEND_MSG);
-      } catch (Exception exception) {
-        this.producerView.handleException(exception);
-      }
+    public MessageService(ProducerView producerView, MetricProducer metricProducer) {
+        this.producerView = producerView;
+        this.metricProducer = metricProducer;
     }
-  }
+
+    /**
+     * Service lifecycle.
+     * (gets metrics from analysers with delay)
+     */
+    public void proceed() {
+        try {
+            final int delay = yamlParser.getValueFromProperties("delay");
+            while (true) {
+                TimeUnit.MILLISECONDS.sleep(delay);
+                HashMap<Metrics, Object> analysedInfo = new HashMap<>();
+                for (HardwareAnalyser analyser : hardwareAnalysers) {
+                    Map.Entry<Metrics, Object> entry = analyser.analyse();
+                    analysedInfo.put(entry.getKey(), entry.getValue());
+                }
+                metricProducer.send(analysedInfo);
+                this.producerView.handleInfoLog(PRODUCER_SEND_MSG);
+            }
+        } catch (Exception exception) {
+            this.producerView.handleException(exception);
+        }
+    }
 }
