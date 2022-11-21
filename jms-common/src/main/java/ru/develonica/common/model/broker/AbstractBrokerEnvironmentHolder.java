@@ -1,7 +1,7 @@
 package ru.develonica.common.model.broker;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import ru.develonica.common.model.YamlParser;
+import ru.develonica.common.model.property.YamlParser;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;

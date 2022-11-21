@@ -1,6 +1,6 @@
 package ru.develonica;
 
-import ru.develonica.common.model.YamlParser;
+import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.common.view.BaseView;
 import ru.develonica.model.BrokerStarter;
 

@@ -1,6 +1,6 @@
 package ru.develonica.controller;
 
-import ru.develonica.common.model.YamlParser;
+import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.model.AlertLogWriter;
 import ru.develonica.model.StatusResolver;
 import ru.develonica.model.broker.BrokerMessage;

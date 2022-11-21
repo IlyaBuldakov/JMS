@@ -1,6 +1,6 @@
 package ru.develonica.model.service;
 
-import ru.develonica.common.model.YamlParser;
+import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.common.model.hardware.Metrics;
 import ru.develonica.model.broker.MetricProducer;
 import ru.develonica.model.hardware.HardwareAnalyser;

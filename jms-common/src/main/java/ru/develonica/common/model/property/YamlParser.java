@@ -1,4 +1,4 @@
-package ru.develonica.common.model;
+package ru.develonica.common.model.property;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

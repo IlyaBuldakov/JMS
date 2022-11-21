@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoublePredicate;
 
-import ru.develonica.common.model.YamlParser;
+import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.common.model.hardware.Metrics;
 
 /**
