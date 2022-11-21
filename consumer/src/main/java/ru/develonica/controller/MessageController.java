@@ -5,7 +5,7 @@ import ru.develonica.model.AlertLogWriter;
 import ru.develonica.model.StatusResolver;
 import ru.develonica.model.broker.BrokerMessage;
 import ru.develonica.model.broker.MetricReceiver;
-import ru.develonica.view.ApplicationView;
+import ru.develonica.view.ConsumerView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +17,7 @@ public class MessageController {
 
     private final MetricReceiver metricReceiver;
 
-    private final ApplicationView applicationView;
+    private final ConsumerView consumerView;
 
     private final YamlParser yamlParser = new YamlParser();
 
@@ -25,9 +25,9 @@ public class MessageController {
 
     private final StatusResolver statusResolver = new StatusResolver(yamlParser, alertLogWriter);
 
-    public MessageController(MetricReceiver metricReceiver, ApplicationView applicationView) {
+    public MessageController(MetricReceiver metricReceiver, ConsumerView consumerView) {
         this.metricReceiver = metricReceiver;
-        this.applicationView = applicationView;
+        this.consumerView = consumerView;
     }
 
     /**
@@ -40,10 +40,10 @@ public class MessageController {
             while (true) {
                 TimeUnit.MILLISECONDS.sleep(delay);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
-                this.applicationView.handleMap(statusResolver.resolve(brokerMessage.value()));
+                this.consumerView.handleMap(statusResolver.resolve(brokerMessage.value()));
             }
         } catch (Exception exception) {
-            this.applicationView.handleException(exception);
+            this.consumerView.handleException(exception);
         }
     }
 }

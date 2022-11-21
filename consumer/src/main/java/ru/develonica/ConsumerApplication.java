@@ -3,14 +3,14 @@ package ru.develonica;
 import ru.develonica.controller.MessageController;
 import ru.develonica.model.broker.BrokerEnvironmentHolder;
 import ru.develonica.model.broker.MetricReceiver;
-import ru.develonica.view.ApplicationView;
+import ru.develonica.view.ConsumerView;
 
 /**
  * Main consumer class.
  */
 public class ConsumerApplication {
 
-    private static final ApplicationView APPLICATION_VIEW = new ApplicationView();
+    private static final ConsumerView APPLICATION_VIEW = new ConsumerView();
 
     private static final BrokerEnvironmentHolder BROKER_ENV = new BrokerEnvironmentHolder();
 

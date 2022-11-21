@@ -2,12 +2,12 @@ package ru.develonica.view;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.develonica.common.view.ApplicationView;
+import ru.develonica.common.view.BaseView;
 
 /**
- * Main application ru.develonica.view class.
+ * Main application view class.
  */
-public class ProducerView extends ApplicationView {
+public class ProducerView extends BaseView {
 
     /**
      * Logger instance.

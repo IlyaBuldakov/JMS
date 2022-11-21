@@ -1,7 +1,7 @@
 package ru.develonica;
 
 import ru.develonica.common.model.YamlParser;
-import ru.develonica.common.view.ApplicationView;
+import ru.develonica.common.view.BaseView;
 import ru.develonica.model.BrokerStarter;
 
 /**
@@ -9,7 +9,7 @@ import ru.develonica.model.BrokerStarter;
  */
 public class ServerApplication {
 
-    private static final ApplicationView APPLICATION_VIEW = new ApplicationView();
+    private static final BaseView APPLICATION_VIEW = new BaseView();
 
     private static final YamlParser yamlParser = new YamlParser();
 
