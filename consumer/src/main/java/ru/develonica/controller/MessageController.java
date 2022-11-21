@@ -1,10 +1,10 @@
 package ru.develonica.controller;
 
-import ru.develonica.model.AlertLogWriter;
 import ru.develonica.common.model.YamlParser;
+import ru.develonica.model.AlertLogWriter;
+import ru.develonica.model.StatusResolver;
 import ru.develonica.model.broker.BrokerMessage;
 import ru.develonica.model.broker.MetricReceiver;
-import ru.develonica.model.StatusResolver;
 import ru.develonica.view.ApplicationView;
 
 import java.util.concurrent.TimeUnit;
@@ -14,8 +14,6 @@ import java.util.concurrent.TimeUnit;
  * {@link MetricReceiver} and processes this incoming data.
  */
 public class MessageController {
-
-    private static final int MESSAGE_GET_REQUEST_DELAY = 300;
 
     private final MetricReceiver metricReceiver;
 
@@ -37,14 +35,15 @@ public class MessageController {
      * Handling incoming JMS messages in loop.
      */
     public void proceed() {
-        while (true) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(MESSAGE_GET_REQUEST_DELAY);
+        try {
+            final int delay = yamlParser.getValueFromProperties("delay");
+            while (true) {
+                TimeUnit.MILLISECONDS.sleep(delay);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
                 this.applicationView.handleMap(statusResolver.resolve(brokerMessage.value()));
-            } catch (Exception exception) {
-                this.applicationView.handleException(exception);
             }
+        } catch (Exception exception) {
+            this.applicationView.handleException(exception);
         }
     }
 }

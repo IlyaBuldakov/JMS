@@ -8,5 +8,8 @@ cpu-bound: 10
 ram-bound: 10
 
 # Disk space bound (gigabytes of free space)
-disk-bound: 10
+disk-bound: 15
+
+# Delay between requesting a message from the broker
+delay: 300
 
