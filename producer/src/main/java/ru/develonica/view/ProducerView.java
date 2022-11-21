@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import ru.develonica.common.view.BaseView;
 
 /**
- * Main application view class.
+ * Main producer view class, which
+ * is responsible for the logic of logger
+ * using and displaying information on the screen.
  */
 public class ProducerView extends BaseView {
 

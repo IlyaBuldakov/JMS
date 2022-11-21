@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Main application view class.
+ * Main consumer view class, which
+ * is responsible for the logic of logger
+ * using and displaying information on the screen.
  */
 public class ConsumerView extends BaseView {
 

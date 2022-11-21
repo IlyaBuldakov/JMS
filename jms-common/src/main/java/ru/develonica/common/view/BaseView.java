@@ -8,7 +8,9 @@ import java.io.EOFException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Main application view class.
+ * Base application view class,
+ * which is responsible for the logic of logger
+ * using and displaying information on the screen.
  */
 public class BaseView {
 
