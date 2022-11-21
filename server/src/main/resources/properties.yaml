@@ -1,2 +1,2 @@
 # Broker address
-address: # Enter your address
+address: "localhost:61616"

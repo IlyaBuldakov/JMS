@@ -1,15 +1,14 @@
 # Broker address
-address: # Enter your address
+address: "localhost:61616"
 
 # CPU upper bound (percents load)
 cpu-bound: 10
 
 # RAM upper bound (gigabytes used)
-ram-bound: 10
+ram-bound: 9
 
 # Disk space bound (gigabytes of free space)
 disk-bound: 15
 
 # Delay between requesting a message from the broker
 delay: 300
-
