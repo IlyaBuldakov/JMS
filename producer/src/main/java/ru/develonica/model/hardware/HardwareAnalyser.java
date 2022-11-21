@@ -9,5 +9,11 @@ import java.util.Map;
  */
 public interface HardwareAnalyser {
 
+    /**
+     * Hardware analyse method
+     * (for example - analyse CPU load).
+     *
+     * @return Pair (metrics).
+     */
     Map.Entry<Metrics, Object> analyse();
 }

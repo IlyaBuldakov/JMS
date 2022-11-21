@@ -24,6 +24,11 @@ public class CpuHardwareAnalyserImpl implements HardwareAnalyser {
 
   private static final int CPU_LOAD_GET_METRIC_DELAY = 1000;
 
+  /**
+   * CPU analyse method.
+   *
+   * @return Pair of {@link Metrics} enum and metric value.
+   */
   @Override
   public Map.Entry<Metrics, Object> analyse() {
     OptionalDouble maxCpuLoad = Arrays

@@ -18,6 +18,11 @@ public class DiskHardwareAnalyserImpl implements HardwareAnalyser {
 
     private static final int BYTES_IN_GB = 1_073_741_824;
 
+    /**
+     * Disk space analyse method.
+     *
+     * @return Pair of {@link Metrics} enum and metric value.
+     */
     @Override
     public Map.Entry<Metrics, Object> analyse() {
         OSFileStore fileStore = FILE_SYSTEM.getFileStores().get(0);

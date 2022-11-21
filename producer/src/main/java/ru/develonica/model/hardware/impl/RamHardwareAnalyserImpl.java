@@ -17,6 +17,11 @@ public class RamHardwareAnalyserImpl implements HardwareAnalyser {
 
     private static final int BYTES_IN_GB = 1_073_741_824;
 
+    /**
+     * RAM analyse method.
+     *
+     * @return Pair of {@link Metrics} enum and metric value.
+     */
     @Override
     public Map.Entry<Metrics, Object> analyse() {
         return Map.entry(
