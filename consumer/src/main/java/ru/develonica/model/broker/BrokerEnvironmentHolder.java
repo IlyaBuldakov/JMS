@@ -6,6 +6,7 @@ import ru.develonica.common.model.broker.AbstractBrokerEnvironmentHolder;
 
 import javax.jms.Session;
 import javax.jms.Topic;
+import java.util.Map;
 
 /**
  * {@link Session} and {@link Topic} holder.
@@ -17,6 +18,10 @@ public class BrokerEnvironmentHolder extends AbstractBrokerEnvironmentHolder {
     private static final String BROKER_INIT_FINISH_MESSAGE = AbstractBrokerEnvironmentHolder
             .BROKER_INIT_FINISH_MESSAGE
             .formatted("Consumer's");
+
+    public BrokerEnvironmentHolder(Map<String, String> properties) {
+        super(properties);
+    }
 
     @Override
     protected void logInitializingFinish() {

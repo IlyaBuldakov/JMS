@@ -3,8 +3,8 @@ package ru.develonica.common.model.property;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import ru.develonica.common.exception.IncorrectPropertiesException;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
@@ -21,17 +21,22 @@ public class YamlParser {
             .getClassLoader()
             .getResource(FILE_PROPERTIES_NAME + EXTENSION);
 
-    /**
-     * Main parsing method.
-     *
-     * @param key Yaml key.
-     * @param <T> Return type.
-     * @return ? extends Object (type T). Value by key param.
-     */
-    public <T> T getValueFromProperties(String key) throws IOException {
-        Map<String, T> properties
-                = new ObjectMapper(new YAMLFactory()).readValue(propertiesFileUrl, new TypeReference<>() {
-        });
-        return properties.get(key);
+    public Map<String, String> tryGetAllProperties() throws Exception {
+        Map<String, String> properties = new ObjectMapper(new YAMLFactory())
+                .readValue(propertiesFileUrl,
+                        new TypeReference<>() {
+                        });
+        if (properties.containsValue(null)) {
+            throw new IncorrectPropertiesException();
+        }
+        return properties;
+    }
+
+    public static int parsePropertyToInteger(String property) throws IncorrectPropertiesException {
+        try {
+            return Integer.parseInt(property);
+        } catch (NumberFormatException nfe) {
+            throw new IncorrectPropertiesException();
+        }
     }
 }

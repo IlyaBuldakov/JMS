@@ -1,12 +1,12 @@
 package ru.develonica.common.model.broker;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import ru.develonica.common.model.property.YamlParser;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Session;
 import javax.jms.Topic;
+import java.util.Map;
 
 /**
  * Abstract class-parent of broker environment holders.
@@ -21,11 +21,17 @@ public abstract class AbstractBrokerEnvironmentHolder {
 
     private static final String PROTOCOL_PREFIX = "tcp://";
 
+    private final Map<String, String> properties;
+
     private Session session;
 
     private Topic topic;
 
     private boolean isEnvironmentInitialized;
+
+    protected AbstractBrokerEnvironmentHolder(Map<String, String> properties) {
+        this.properties = properties;
+    }
 
     public Topic getTopic() throws Exception {
         if (!this.isEnvironmentInitialized) {
@@ -47,9 +53,8 @@ public abstract class AbstractBrokerEnvironmentHolder {
      * Method that initializes session and topic.
      */
     private void initEnvironment() throws Exception {
-        YamlParser yamlParser = new YamlParser();
         ConnectionFactory connectionFactory;
-        String address = yamlParser.getValueFromProperties(BROKER_ADDRESS_YAML_KEY);
+        String address = properties.get(BROKER_ADDRESS_YAML_KEY);
         connectionFactory = new ActiveMQConnectionFactory(PROTOCOL_PREFIX + address);
         Connection connection = connectionFactory.createConnection();
         connection.start();

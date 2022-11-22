@@ -4,6 +4,8 @@ import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.common.view.BaseView;
 import ru.develonica.model.BrokerStarter;
 
+import java.util.Map;
+
 /**
  * Main server class.
  */
@@ -15,7 +17,8 @@ public class ServerApplication {
 
     public static void main(String[] args) {
         try {
-            BrokerStarter brokerStarter = new BrokerStarter(yamlParser);
+            Map<String, String> properties = yamlParser.tryGetAllProperties();
+            BrokerStarter brokerStarter = new BrokerStarter(properties);
             brokerStarter.start();
             Object lock = new Object();
             // For continuous operation of the server.

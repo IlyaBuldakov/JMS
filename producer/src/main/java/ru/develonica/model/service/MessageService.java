@@ -1,7 +1,7 @@
 package ru.develonica.model.service;
 
-import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.common.model.hardware.Metrics;
+import ru.develonica.common.model.property.YamlParser;
 import ru.develonica.model.broker.MetricProducer;
 import ru.develonica.model.hardware.HardwareAnalyser;
 import ru.develonica.model.hardware.impl.CpuHardwareAnalyserImpl;
@@ -21,7 +21,7 @@ public class MessageService {
 
     private static final String PRODUCER_SEND_MSG = "PRODUCER | Send analysed info";
 
-    private final YamlParser yamlParser = new YamlParser();
+    private static final String DELAY_PROPERTY_NAME = "delay";
 
     private final ProducerView producerView;
 
@@ -39,9 +39,17 @@ public class MessageService {
      */
     private final MetricProducer metricProducer;
 
-    public MessageService(ProducerView producerView, MetricProducer metricProducer) {
+    /**
+     * Application properties.
+     */
+    private final Map<String, String> properties;
+
+    public MessageService(ProducerView producerView,
+                          MetricProducer metricProducer,
+                          Map<String, String> properties) {
         this.producerView = producerView;
         this.metricProducer = metricProducer;
+        this.properties = properties;
     }
 
     /**
@@ -50,7 +58,8 @@ public class MessageService {
      */
     public void proceed() {
         try {
-            final int delay = yamlParser.getValueFromProperties("delay");
+            final int delay = YamlParser
+                    .parsePropertyToInteger(properties.get(DELAY_PROPERTY_NAME));
             while (true) {
                 TimeUnit.MILLISECONDS.sleep(delay);
                 HashMap<Metrics, Object> analysedInfo = new HashMap<>();

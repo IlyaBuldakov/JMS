@@ -7,6 +7,7 @@ import ru.develonica.model.broker.BrokerMessage;
 import ru.develonica.model.broker.MetricReceiver;
 import ru.develonica.view.ConsumerView;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,19 +16,26 @@ import java.util.concurrent.TimeUnit;
  */
 public class MessageController {
 
+    private static final String DELAY_PROPERTY_NAME = "delay";
+
     private final MetricReceiver metricReceiver;
 
     private final ConsumerView consumerView;
 
-    private final YamlParser yamlParser = new YamlParser();
-
     private final AlertLogWriter alertLogWriter = new AlertLogWriter();
 
-    private final StatusResolver statusResolver = new StatusResolver(yamlParser, alertLogWriter);
+    private final Map<String, String> properties;
 
-    public MessageController(MetricReceiver metricReceiver, ConsumerView consumerView) {
+    private final StatusResolver statusResolver;
+
+
+    public MessageController(MetricReceiver metricReceiver,
+                             ConsumerView consumerView,
+                             Map<String, String> properties) {
         this.metricReceiver = metricReceiver;
         this.consumerView = consumerView;
+        this.properties = properties;
+        this.statusResolver = new StatusResolver(properties, alertLogWriter);
     }
 
     /**
@@ -36,7 +44,7 @@ public class MessageController {
      */
     public void proceed() {
         try {
-            final int delay = yamlParser.getValueFromProperties("delay");
+            final int delay = YamlParser.parsePropertyToInteger(properties.get(DELAY_PROPERTY_NAME));
             while (true) {
                 TimeUnit.MILLISECONDS.sleep(delay);
                 BrokerMessage brokerMessage = this.metricReceiver.receive();
