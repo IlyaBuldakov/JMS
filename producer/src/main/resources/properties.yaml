@@ -2,4 +2,4 @@
 address: "localhost:61616"
 
 # Delay between sending a message
-delay: 300
+delay: "300"

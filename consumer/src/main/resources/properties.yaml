@@ -2,13 +2,13 @@
 address: "localhost:61616"
 
 # CPU upper bound (percents load)
-cpu-bound: 10
+cpu-bound: "10"
 
 # RAM upper bound (gigabytes used)
-ram-bound: 9
+ram-bound: "9"
 
 # Disk space bound (gigabytes of free space)
-disk-bound: 15
+disk-bound: "15"
 
 # Delay between requesting a message from the broker
-delay: 300
+delay: "300"
