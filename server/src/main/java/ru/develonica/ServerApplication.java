@@ -20,11 +20,7 @@ public class ServerApplication {
             Map<String, String> properties = yamlParser.tryGetAllProperties();
             BrokerStarter brokerStarter = new BrokerStarter(properties);
             brokerStarter.start();
-            Object lock = new Object();
-            // For continuous operation of the server.
-            synchronized (lock) {
-                lock.wait();
-            }
+            Thread.currentThread().join();
         } catch (Exception exception) {
             APPLICATION_VIEW.handleException(exception);
         }
