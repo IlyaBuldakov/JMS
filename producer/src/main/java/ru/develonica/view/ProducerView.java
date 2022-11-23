@@ -22,8 +22,6 @@ public class ProducerView extends BaseView {
      * @param message {@link String} message.
      */
     public void handleInfoLog(String message) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info(message);
-        }
+        LOG.info(message);
     }
 }
